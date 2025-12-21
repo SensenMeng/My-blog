@@ -1,8 +1,24 @@
-<a href="/">Home</a>
-<a href="/about/">About</a>
-<a href="/blog/">Blog</a>
-<h1>My love body</h1>
-<p>Why not communication with me?</p>
-<h1>My First Blog</h1>
-<h2>Intro</h2>
-<p>This is my first Blog</p>
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+
+const pageTitle = "森森的博客";
+---
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <Header />
+
+    <h1>我的博客</h1>
+    <p>开启写博客之旅！</p>
+    <ul>
+      <li><a href="/posts/post-1/">线性代数第六章汇报</a></li>
+      <li><a href="/posts/post-2/">王的第二个博客</a></li>
+      <li><a href="/posts/post-3/">懒得写</a></li>
+    </ul>
+  </body>
+</html>

@@ -1,14 +1,65 @@
-<a href="/">Home</a>
-<a href="/about/">About</a>
-<a href="/blog/">Blog</a>
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
-<body></body>
+const pageTitle = "关于森森";
+const identity = {
+    firstname: "森森",
+    country: "中国",
+    occupation: "大学牲",
+    hobbies: ["敲代码","敲代码","敲他妈的代码"]
+};
+const skills = ["C++","python"];
 
-    <h1>About Me</h1>
-    <h2>... and my new Astro site!</h2>
-    <h3>like me!</h3>
+const happy = true;
+const finished = false;
+const goal = 3;
 
-    <p>enjoy your time!</p>
-    <p>big!</p>
+const skillColor = "crimson";
+const fontWeight = "bold";
+const textCase = "capitalize";
+---
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width" />
+        <title>{pageTitle}</title>
+        <style define:vars={{skillColor,fontWeight,textCase}}>
+            h1 {
+                color : rosybrown;
+                font-size : 3rem;
+            }
+            .skill {
+                color: var(--skillColor);
+                font-weight: var(--fontWeight);
+                text-transform: var(--textCase);
+            }
+        </style>
+    </head>
 
-</body></body>
+    <body>
+        <Header />
+
+        <h1>{pageTitle}</h1>
+        <h2>... 和森森的博客网站!</h2>
+
+        <p>我的一些信息:</p>
+        <ul>
+            <li>我叫{identity.firstname}。</li>
+            <li>我在{identity.country}，是一名{identity.occupation}。</li>
+            {identity.hobbies.length >=2 &&
+                <li>我的俩爱好:{identity.hobbies[0]}和{identity.hobbies[1]}</li>
+            }
+        </ul>
+        <p>就凭你还想知道我的技能？</p>
+        <p>行吧满足你！</p>
+        <ul>
+            {skills.map((skill)=><li class="skill">{skill}</li>)}
+        </ul>
+        {happy && <p>开心!</p>}
+        {finished && <p>finished!</p>}
+        {goal == 3 && <p>当且仅当目标值是三的时候，你才配看到这条消息！</p>}
+        <Footer />
+    </body>
+</html>
