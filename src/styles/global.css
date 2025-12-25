@@ -12,6 +12,10 @@ body {
     color: #C1C3C7;
 }
 
+a {
+  color:#C1C3C7;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -108,7 +112,7 @@ html.dark {
 }
 
 .dark a {
-  color: #00ff33;
+  color: #000000;
 }
 
 .dark body {
