@@ -59,6 +59,11 @@ h1 {
   display: block;
 }
 
+.img-wrapper img{
+  width : 100px;
+  height: 100px;
+}
+
 @media screen and (min-width: 636px) {
   .nav-links {
     margin-left: 5em;
@@ -76,6 +81,11 @@ h1 {
   .menu {
     display: none;
   }
+
+  .img-wrapper img {
+  width : 200px;
+  height: 200px;
+ }
 }
 
 html.dark {
