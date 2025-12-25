@@ -89,13 +89,13 @@ h1 {
 }
 
 html.dark {
-  background-color: #0d0950;
+  background-color: #ffffff;
   color: #fff;
 }
 
 .dark .menu {
-  background-color: #fff;
-  color: #000;
+  background-color: #13161C;
+  color: #ffffff;
 }
 
 .dark .nav-links a:hover,
@@ -104,9 +104,18 @@ html.dark {
 }
 
 .dark .nav-links a {
-  color: #fff;
+  color: #000000;
 }
 
 .dark a {
-  color: #ff9776;
+  color: #00ff33;
+}
+
+.dark body {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 80ch;
+    padding: 1rem;
+    line-height: 1.5;
+    color: #000000;
 }
