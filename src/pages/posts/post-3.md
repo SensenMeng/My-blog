@@ -99,8 +99,17 @@ $ \boldsymbol{x} = c_1 \boldsymbol{\xi}_{i1} + c_2 \boldsymbol{\xi}_{i2} + \cdot
 
 **性质 6.1.4'** 设 $ \lambda_1, \lambda_2, \cdots, \lambda_m $ 是矩阵 $ \boldsymbol{A} $ 的互不相同的特征值，$ \boldsymbol{\alpha}_{i1}, \boldsymbol{\alpha}_{i2}, \cdots, \boldsymbol{\alpha}_{ik_i} $ 为属于 $ \lambda_i $ 的一组线性无关特征向量 $ (i = 1, 2, \cdots, m) $，则向量组
 $$
-\boldsymbol{\alpha}_{11}, \boldsymbol{\alpha}_{12}, \cdots, \boldsymbol{\alpha}_{1k_1}; \boldsymbol{\alpha}_{21}, \boldsymbol{\alpha}_{22}, \cdots, \boldsymbol{\alpha}_{2k_2}; \cdots; \boldsymbol{\alpha}_{m1}, \boldsymbol{\alpha}_{m2}, \cdots, \boldsymbol{\alpha}_{mk_m} \tag{6.1.14}
+\boldsymbol{\alpha}_{11}, \boldsymbol{\alpha}_{12}, \cdots, \boldsymbol{\alpha}_{1k_1}
 $$
+
+$$
+\boldsymbol{\alpha}_{21}, \boldsymbol{\alpha}_{22}, \cdots, \boldsymbol{\alpha}_{2k_2}
+$$
+
+$$
+\boldsymbol{\alpha}_{m1}, \boldsymbol{\alpha}_{m2}, \cdots, \boldsymbol{\alpha}_{mk_m}\tag{6.1.14}
+$$
+
 线性无关.
 
 >这个性质在高数求微分方程中说明，不同特征值下的解函数是线性无关的，可以直接当做基使用

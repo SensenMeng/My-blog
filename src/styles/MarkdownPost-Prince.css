@@ -15,10 +15,16 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
   line-height: 1.6; /* 行高和Prince一致 */
   color: #C1C3C7; /* 正文颜色 */
-  max-width: 1800px; /* 容器宽度匹配VSCode编辑区 */
+  /* max-width: 1800px; 容器宽度匹配VSCode编辑区 */
   margin: 0 auto;
   padding: 0rem;
   font-size: 16px;
+  max-width: 100vw;
+  width: 100%;
+  /* margin: 0 auto; */
+  /* padding: 0 15px; */
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* 标题层级：严格匹配Prince的字号/间距/边框 */
@@ -186,69 +192,105 @@ html.dark .markdown-prince tr:hover td {
 .markdown-prince td[align="right"] {
   text-align: right;
 }
-/* ========== Markdown公式移动端适配 ========== */
-/* 适配行内公式（$...$） */
-.markdown-prince p code.math-inline,
-.markdown-prince li code.math-inline,
-.markdown-prince span.math-inline {
-  /* 基础样式：避免行内公式挤压文字 */
-  padding: 0.1rem 0.3rem;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  /* 移动端换行处理 */
-  white-space: nowrap;
-  max-width: 100%;
-  overflow-x: auto;
-  display: inline-block;
-  vertical-align: middle;
-}
 
-/* 适配块级公式（$$...$$） */
-.markdown-prince div.math-block,
-.markdown-prince .katex-display,
-.markdown-prince .mathjax-container {
-  /* 核心：横向滚动 + 自适应宽度 */
+.markdown-prince > div.MathJax_Display {
   overflow-x: auto;
   overflow-y: hidden;
-  max-width: 100vw !important; /* 限制最大宽度为屏幕宽度 */
-  margin: 1rem auto !important; /* 居中显示 */
+  max-width: 100%;
+  width: 100%;
+  margin: 1.5rem auto;
+  padding: 0.5rem 0;
+  box-sizing: border-box;
+  position: relative;
+  left: 0;
+  transform: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+/* ========== MathJax 移动端专属适配 ========== */
+/* 1. 块级公式（$$...$$）核心适配 */
+.markdown-prince .MathJax_Display,
+.markdown-prince div.mathjax-container,
+.markdown-prince [id^="MathJax-Element"] {
+  /* 关键：开启横向滚动，避免公式溢出被挤压 */
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  /* 限制最大宽度为屏幕宽度，左右留边避免贴边 */
+  max-width: calc(100vw - 20px) !important;
+  width: 100% !important;
+  /* 居中显示，防止缩在左侧 */
+  margin: 1rem auto !important;
   padding: 0.5rem 0 !important;
-  /* 去掉默认的overflow:hidden，避免公式被裁剪 */
-  overflow: visible !important;
+  /* 禁止MathJax默认的溢出隐藏 */
+  display: block !important;
+  position: relative !important;
+  left: 0 !important;
+  transform: none !important;
 }
 
-/* 强制公式容器宽度自适应 */
-.markdown-prince .katex {
-  white-space: nowrap !important; /* 公式不换行 */
-  font-size: 0.95rem !important; /* 移动端适当缩小字号，减少宽度压力 */
+/* 2. 行内公式（$...$）适配 */
+.markdown-prince .MathJax,
+.markdown-prince span.math-inline {
+  /* 行内公式不挤压文字，超出可滚动 */
+  white-space: nowrap !important;
+  max-width: 100% !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  padding: 0.1rem 0.2rem !important;
 }
 
-/* 移动端优化：去掉横向滚动条（可选，更美观） */
+/* 3. 强制MathJax不缩放公式（核心修复缩在左侧的问题） */
+.markdown-prince .MathJax svg,
+.markdown-prince .MathJax_Cell {
+  transform: none !important;
+  scale: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  /* 禁止公式被强制缩小 */
+  min-width: unset !important;
+}
+
+/* 4. 移动端优化 */
 @media (max-width: 768px) {
-  .markdown-prince .math-block::-webkit-scrollbar,
-  .markdown-prince .katex-display::-webkit-scrollbar {
-    height: 4px; /* 滚动条高度 */
-  }
-  .markdown-prince .math-block::-webkit-scrollbar-thumb,
-  .markdown-prince .katex-display::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 2px;
-  }
-  /* 可选：隐藏滚动条（仍可滑动） */
-  /*
-  .markdown-prince .math-block::-webkit-scrollbar {
-    display: none;
-  }
-  */
-  
-  /* 进一步缩小移动端公式字号 */
-  .markdown-prince .katex {
+  /* 块级公式：优化滚动体验 */
+  .markdown-prince .MathJax_Display {
+    /* 移动端顺滑滚动 */
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+    /* 适当缩小公式字号，减少宽度压力 */
     font-size: 0.9rem !important;
   }
+  
+  /* 行内公式：进一步适配移动端文字排版 */
+  .markdown-prince .MathJax {
+    font-size: 0.85rem !important;
+  }
+  
+  /* 优化滚动条样式（可选，更美观） */
+  .markdown-prince .MathJax_Display::-webkit-scrollbar {
+    height: 3px !important;
+  }
+  .markdown-prince .MathJax_Display::-webkit-scrollbar-thumb {
+    background-color: #ddd !important;
+    border-radius: 2px !important;
+  }
+  
+  /* 可选：隐藏滚动条（仍可滑动） */
+  /*
+  .markdown-prince .MathJax_Display::-webkit-scrollbar {
+    display: none !important;
+  }
+  */
+
+  .markdown-prince > div.MathJax_Display {
+    font-size: 0.9rem;
+  }
 }
 
-/* 防止公式容器被父元素限制宽度 */
+/* 5. 兜底：确保父容器不限制公式宽度 */
 .markdown-prince {
   overflow-x: visible !important;
-  position: relative;
+  padding: 0 10px !important; /* 移动端左右留边 */
+  max-width: 100% !important;
 }
