@@ -186,3 +186,69 @@ html.dark .markdown-prince tr:hover td {
 .markdown-prince td[align="right"] {
   text-align: right;
 }
+/* ========== Markdown公式移动端适配 ========== */
+/* 适配行内公式（$...$） */
+.markdown-prince p code.math-inline,
+.markdown-prince li code.math-inline,
+.markdown-prince span.math-inline {
+  /* 基础样式：避免行内公式挤压文字 */
+  padding: 0.1rem 0.3rem;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  /* 移动端换行处理 */
+  white-space: nowrap;
+  max-width: 100%;
+  overflow-x: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* 适配块级公式（$$...$$） */
+.markdown-prince div.math-block,
+.markdown-prince .katex-display,
+.markdown-prince .mathjax-container {
+  /* 核心：横向滚动 + 自适应宽度 */
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100vw !important; /* 限制最大宽度为屏幕宽度 */
+  margin: 1rem auto !important; /* 居中显示 */
+  padding: 0.5rem 0 !important;
+  /* 去掉默认的overflow:hidden，避免公式被裁剪 */
+  overflow: visible !important;
+}
+
+/* 强制公式容器宽度自适应 */
+.markdown-prince .katex {
+  white-space: nowrap !important; /* 公式不换行 */
+  font-size: 0.95rem !important; /* 移动端适当缩小字号，减少宽度压力 */
+}
+
+/* 移动端优化：去掉横向滚动条（可选，更美观） */
+@media (max-width: 768px) {
+  .markdown-prince .math-block::-webkit-scrollbar,
+  .markdown-prince .katex-display::-webkit-scrollbar {
+    height: 4px; /* 滚动条高度 */
+  }
+  .markdown-prince .math-block::-webkit-scrollbar-thumb,
+  .markdown-prince .katex-display::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 2px;
+  }
+  /* 可选：隐藏滚动条（仍可滑动） */
+  /*
+  .markdown-prince .math-block::-webkit-scrollbar {
+    display: none;
+  }
+  */
+  
+  /* 进一步缩小移动端公式字号 */
+  .markdown-prince .katex {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* 防止公式容器被父元素限制宽度 */
+.markdown-prince {
+  overflow-x: visible !important;
+  position: relative;
+}
