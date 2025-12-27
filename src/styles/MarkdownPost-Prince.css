@@ -182,7 +182,7 @@ html.dark .markdown-prince tr:hover td {
   color: #C1C3C7;
 }
 
-/* ========== 表格对齐（反向逻辑不影响对齐，保留） ========== */
+/* ========== 表格对齐========== */
 .markdown-prince th[align="center"],
 .markdown-prince td[align="center"] {
   text-align: center;
@@ -193,104 +193,27 @@ html.dark .markdown-prince tr:hover td {
   text-align: right;
 }
 
-.markdown-prince > div.MathJax_Display {
-  overflow-x: auto;
-  overflow-y: hidden;
-  max-width: 100%;
+/* 针对MathJax渲染的公式容器 */
+.math-container {
   width: 100%;
-  margin: 1.5rem auto;
-  padding: 0.5rem 0;
-  box-sizing: border-box;
-  position: relative;
-  left: 0;
-  transform: none;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: auto; /* 横向溢出时显示滚动条（移动端可拖动） */
+  overflow-y: hidden;
+  white-space: nowrap; /* 禁止公式换行，保证单行横向滚动 */
+  -webkit-overflow-scrolling: touch; /* 优化移动端滚动体验 */
+  padding: 0.5rem 0; /* 增加上下内边距，避免滚动条遮挡 */
 }
 
-
-/* ========== MathJax 移动端专属适配 ========== */
-/* 1. 块级公式（$$...$$）核心适配 */
-.markdown-prince .MathJax_Display,
-.markdown-prince div.mathjax-container,
-.markdown-prince [id^="MathJax-Element"] {
-  /* 关键：开启横向滚动，避免公式溢出被挤压 */
-  overflow-x: auto ;
-  overflow-y: hidden ;
-  /* 限制最大宽度为屏幕宽度，左右留边避免贴边 */
-  max-width: calc(100vw - 20px) ;
-  width: 100% ;
-  /* 居中显示，防止缩在左侧 */
-  margin: 1rem auto ;
-  padding: 0.5rem 0 ;
-  /* 禁止MathJax默认的溢出隐藏 */
-  display: block ;
-  position: relative ;
-  left: 0 ;
-  transform: none ;
+/* 禁用MathJax公式的自动缩放（关键） */
+.mjx-chtml {
+  font-size: inherit !important; /* 继承父元素字体大小，不单独缩放 */
+  white-space: nowrap !important;
 }
 
-/* 2. 行内公式（$...$）适配 */
-.markdown-prince .MathJax,
-.markdown-prince span.math-inline {
-  /* 行内公式不挤压文字，超出可滚动 */
-  white-space: nowrap ;
-  max-width: 100% ;
-  display: inline-block ;
-  vertical-align: middle ;
-  padding: 0.1rem 0.2rem ;
-}
-
-/* 3. 强制MathJax不缩放公式（核心修复缩在左侧的问题） */
-.markdown-prince .MathJax svg,
-.markdown-prince .MathJax_Cell {
-  transform: none ;
-  scale: 1 ;
-  width: auto ;
-  height: auto ;
-  /* 禁止公式被强制缩小 */
-  min-width: unset ;
-}
-
-/* 4. 移动端优化 */
+/* 媒体查询：仅在移动端生效（屏幕宽度≤768px） */
 @media (max-width: 768px) {
-  /* 块级公式：优化滚动体验 */
-  .markdown-prince .MathJax_Display {
-    /* 移动端顺滑滚动 */
-    -webkit-overflow-scrolling: touch ;
-    scrollbar-width: thin ;
-    /* 适当缩小公式字号，减少宽度压力 */
-    font-size: 0.9rem ;
+  .math-container {
+    max-width: 100vw; /* 限制最大宽度为屏幕宽度 */
+    margin: 0 -1rem; /* 抵消页面内边距，充分利用宽度 */
+    padding: 0.5rem 1rem;
   }
-  
-  /* 行内公式：进一步适配移动端文字排版 */
-  .markdown-prince .MathJax {
-    font-size: 0.85rem ;
-  }
-  
-  /* 优化滚动条样式（可选，更美观） */
-  .markdown-prince .MathJax_Display::-webkit-scrollbar {
-    height: 3px ;
-  }
-  .markdown-prince .MathJax_Display::-webkit-scrollbar-thumb {
-    background-color: #ddd ;
-    border-radius: 2px ;
-  }
-  
-  /* 可选：隐藏滚动条（仍可滑动） */
-  /*
-  .markdown-prince .MathJax_Display::-webkit-scrollbar {
-    display: none ;
-  }
-  */
-
-  .markdown-prince > div.MathJax_Display {
-    font-size: 0.9rem;
-  }
-}
-
-/* 5. 兜底：确保父容器不限制公式宽度 */
-.markdown-prince {
-  overflow-x: visible ;
-  padding: 0 10px ; /* 移动端左右留边 */
-  max-width: 100% ;
 }

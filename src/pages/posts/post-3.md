@@ -100,13 +100,9 @@ $ \boldsymbol{x} = c_1 \boldsymbol{\xi}_{i1} + c_2 \boldsymbol{\xi}_{i2} + \cdot
 **性质 6.1.4'** 设 $ \lambda_1, \lambda_2, \cdots, \lambda_m $ 是矩阵 $ \boldsymbol{A} $ 的互不相同的特征值，$ \boldsymbol{\alpha}_{i1}, \boldsymbol{\alpha}_{i2}, \cdots, \boldsymbol{\alpha}_{ik_i} $ 为属于 $ \lambda_i $ 的一组线性无关特征向量 $ (i = 1, 2, \cdots, m) $，则向量组
 $$
 \boldsymbol{\alpha}_{11}, \boldsymbol{\alpha}_{12}, \cdots, \boldsymbol{\alpha}_{1k_1}
-$$
 
-$$
 \boldsymbol{\alpha}_{21}, \boldsymbol{\alpha}_{22}, \cdots, \boldsymbol{\alpha}_{2k_2}
-$$
 
-$$
 \boldsymbol{\alpha}_{m1}, \boldsymbol{\alpha}_{m2}, \cdots, \boldsymbol{\alpha}_{mk_m}\tag{6.1.14}
 $$
 
@@ -162,22 +158,28 @@ $ P^{-1}AP = B $
 **定理6.2.2（矩阵可对角化的充要条件）** $ n $ 阶矩阵 $ A $ 可对角化的充要条件是 $ A $ 有 $ n $ 个线性无关的特征向量。
 
 
-**证 必要性** 设有可逆矩阵 $ P $，使
-$ P^{-1}AP = \begin{bmatrix}
+**证 必要性** 设有可逆矩阵 $P$，使
+$P^{-1}AP = \begin{bmatrix}
 \lambda_1 &&& \\
 &\lambda_2 && \\
 &&\ddots& \\
 &&&\lambda_n
-\end{bmatrix} \stackrel{\text{记为}}{=} D, \tag{6.2.1} $
-设 $ P $ 按列分块为
-$ P = \begin{bmatrix} \boldsymbol{x}_1 & \boldsymbol{x}_2 & \cdots & \boldsymbol{x}_n \end{bmatrix}, \tag{6.2.2} $
-则 $ \boldsymbol{x}_1, \boldsymbol{x}_2, \dots, \boldsymbol{x}_n $ 线性无关，且由 (6.2.1) 式得 $ AP = PD $，即
-$ A\begin{bmatrix} \boldsymbol{x}_1 & \boldsymbol{x}_2 & \cdots & \boldsymbol{x}_n \end{bmatrix} = \begin{bmatrix} \boldsymbol{x}_1 & \boldsymbol{x}_2 & \cdots & \boldsymbol{x}_n \end{bmatrix}\begin{bmatrix}
-\lambda_1 &&& \\
-&\lambda_2 && \\
-&&\ddots& \\
-&&&\lambda_n
-\end{bmatrix}, \tag{6.2.3} $
+\end{bmatrix} \stackrel{\text{记为}}{=} D, \tag{6.2.1}$
+设 $P$ 按列分块为
+$P = \begin{bmatrix} \boldsymbol{x}_1 & \boldsymbol{x}_2 & \cdots & \boldsymbol{x}_n \end{bmatrix}, \tag{6.2.2}$
+则$\boldsymbol{x}_1, \boldsymbol{x}_2, \dots, \boldsymbol{x}_n$ 线性无关，且由 (6.2.1) 式得 $AP = PD$，即
+
+<div class = "math-container">
+   $$
+   A\begin{bmatrix} \boldsymbol{x}_1 & \boldsymbol{x}_2 & \cdots & \boldsymbol{x}_n \end{bmatrix} = \begin{bmatrix} \boldsymbol{x}_1 & \boldsymbol{x}_2 & \cdots & \boldsymbol{x}_n \end{bmatrix}\begin{bmatrix}
+   \lambda_1 &&& \\
+   &\lambda_2 && \\
+   &&\ddots& \\
+   &&&\lambda_n
+   \end{bmatrix}, \tag{6.2.3}
+   $$
+</div>
+
 亦即
 $ \begin{bmatrix} A\boldsymbol{x}_1 & A\boldsymbol{x}_2 & \cdots & A\boldsymbol{x}_n \end{bmatrix} = \begin{bmatrix} \lambda_1\boldsymbol{x}_1 & \lambda_2\boldsymbol{x}_2 & \cdots & \lambda_n\boldsymbol{x}_n \end{bmatrix} $
 或
@@ -185,7 +187,7 @@ $ A\boldsymbol{x}_i = \lambda_i \boldsymbol{x}_i, \quad i = 1,2,\dots,n. \tag{6.
 因 $ \boldsymbol{x}_i \neq \boldsymbol{0} $，故 $ \lambda_i $ 为 $ A $ 的特征值，$ \boldsymbol{x}_i $ 为对应于 $ \lambda_i $ 的特征向量 $ (i=1,2,\dots,n) $。所以 $ A $ 有 $ n $ 个线性无关的特征向量 $ \boldsymbol{x}_1, \boldsymbol{x}_2, \dots, \boldsymbol{x}_n $。
 
 
-将以上证明倒推上去，就是充分性的证明。■
+将以上证明倒推上去，就是充分性的证明。
 
 
 从定理6.2.2的证明中我们看到，当矩阵 $ A $ 与对角矩阵 $ D $ 相似时，使得 $ P^{-1}AP=D $ 的**可逆矩阵 $ P $ 的第 $ j $ 列 $ \boldsymbol{x}_j $ 就是 $ A $ 的对应于特征值 $ \lambda_j $ 的特征向量** $ (j=1,\dots,n) $。因此，当 $ A $ 可对角化时，欲求使得 (6.2.1) 式成立的对角矩阵 $ D $ 及可逆矩阵 $ P $，也就是求 $ A $ 的全部特征值及 $ A $ 的 $ n $ 个线性无关的特征向量。
@@ -831,11 +833,14 @@ $
 **3. 特征值的模与长期趋势**
 
 模：
-$
+<div class = "math-container">
+$$
 |\lambda| = \sqrt{(1.05)^2 + (0.0866025)^2}
 = \sqrt{1.1025 + 0.0075}
 = \sqrt{1.11}
-$
+$$
+</div>
+
 $
 \sqrt{1.11} \approx 1.05336 > 1.
 $

@@ -42,3 +42,44 @@ const { frontmatter } = Astro.props;
   }
   .tag a{color:#C1C3C7;}
 </style>
+
+<!-- 纯JS版MathJax配置（无TS语法，避免声明错误） -->
+<script is:inline>
+  // 直接赋值，用JS容错判断替代TS类型声明
+  window.MathJax = window.MathJax || {};
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      packages: { '[+]': ['amsmath', 'amssymb'] }
+    },
+    chtml: {
+      scale: 1,
+      displayAlign: 'left',
+      matchFontHeight: true
+    },
+    startup: {
+      ready() {
+        // 容错：确保defaultReady方法存在再调用
+        if (typeof window.MathJax?.startup?.defaultReady === 'function') {
+          window.MathJax.startup.defaultReady();
+        }
+        
+        // 修复：先判断节点存在且父节点非空，再包裹容器
+        const formulaContainers = document.querySelectorAll('mjx-container.mjx-chtml[display="true"]');
+        formulaContainers.forEach(container => {
+          // 双重判断，避免null报错
+          if (container && container.parentNode) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'math-container';
+            container.parentNode.insertBefore(wrapper, container);
+            wrapper.appendChild(container);
+          }
+        });
+      }
+    }
+  };
+</script>
+
+<!-- 引入MathJax核心库 -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
