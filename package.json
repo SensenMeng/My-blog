@@ -14,7 +14,10 @@
     "@astrojs/rss": "^4.0.14",
     "astro": "^5.16.6",
     "preact": "^10.28.1",
-    "rehype-mathjax": "^7.1.0"
+    "rehype-mathjax": "^7.1.0",
+    "rehype-stringify": "^10.0.1",
+    "remark": "^15.0.1",
+    "remark-rehype": "^11.1.2"
   },
   "devDependencies": {
     "remark-math": "^6.0.0"

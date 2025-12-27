@@ -1,0 +1,134 @@
+---
+// src/components/BackToTop.astro - 最终版（修复important错误）
+---
+
+<!-- 核心：固定在浏览器右下角，不随页面滚动，样式醒目 -->
+<button
+  id="backToTopBtn"
+  aria-label="返回顶部"
+  style="
+    /* 关键：固定定位 + 高z-index，确保在浏览器窗口右下角 */
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 99999;
+    
+    /* 样式：醒目圆形按钮 */
+    width: 60px;
+    height: 60px;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    
+    /* 初始状态：隐藏 */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    
+    /* 布局：箭头居中 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* 视觉增强：阴影+悬浮效果 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    
+    /* 强制优先级：用CSS的!important，而非JS */
+    position: fixed !important;
+    z-index: 99999 !important;
+    bottom: 40px !important;
+    right: 40px !important;
+    width: 60px !important;
+    height: 60px !important;
+    background-color: #4f46e5 !important;
+  "
+>
+  <!-- 向上箭头：更大更醒目 -->
+  <span style="
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-top: 3px solid white !important;
+    border-right: 3px solid white !important;
+    transform: rotate(-45deg) !important;
+    margin-bottom: 6px !important;
+  "></span>
+</button>
+
+<script>
+  // 等待页面完全加载，确保DOM渲染完成
+  window.addEventListener('load', () => {
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    
+    // 安全检查
+    if (!backToTopBtn) {
+      console.error('❌ 返回顶部按钮元素未找到，请检查组件引入路径');
+      return;
+    }
+
+    // 滚动监听：滚动超过300px显示按钮，否则隐藏
+    const handleScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      // 显示条件：滚动距离>300px（不管滚动方向，更易用）
+      if (scrollY > 300) {
+        backToTopBtn.style.opacity = '1';
+        backToTopBtn.style.visibility = 'visible';
+      } else {
+        backToTopBtn.style.opacity = '0';
+        backToTopBtn.style.visibility = 'hidden';
+      }
+    };
+
+    // 点击返回顶部：平滑滚动，体验更好
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // 悬浮交互：放大+变色，增强反馈（移除JS里的!important）
+    backToTopBtn.addEventListener('mouseenter', () => {
+      // 方法1：直接改样式（无!important，靠CSS优先级覆盖）
+      backToTopBtn.style.backgroundColor = '#4338ca';
+      backToTopBtn.style.transform = 'scale(1.1)';
+    });
+
+    backToTopBtn.addEventListener('mouseleave', () => {
+      backToTopBtn.style.backgroundColor = '#4f46e5';
+      backToTopBtn.style.transform = 'scale(1)';
+    });
+
+    // 初始化执行一次，避免初始状态异常
+    handleScroll();
+    // 监听滚动事件
+    window.addEventListener('scroll', handleScroll);
+
+    console.log('✅ 返回顶部按钮已成功加载（固定在浏览器右下角）');
+  });
+</script>
+
+<!-- 移动端适配：尺寸稍小，位置微调（全部用CSS的!important） -->
+<style>
+  #backToTopBtn {
+    /* 基础样式强制优先级 */
+    position: fixed !important;
+    z-index: 99999 !important;
+  }
+
+  @media (max-width: 768px) {
+    #backToTopBtn {
+      width: 50px !important;
+      height: 50px !important;
+      bottom: 20px !important;
+      right: 20px !important;
+    }
+    #backToTopBtn span {
+      width: 16px !important;
+      height: 16px !important;
+    }
+  }
+</style>

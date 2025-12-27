@@ -123,3 +123,7 @@ html.dark {
     line-height: 1.5;
     color: #000000;
 }
+
+#backToTopBtn {
+  z-index: 9999 !important; /* 确保按钮在最上层 */
+}

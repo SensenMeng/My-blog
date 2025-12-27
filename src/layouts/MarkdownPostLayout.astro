@@ -1,5 +1,7 @@
 ---
+import BackToTop from '../components/BackToTop.astro';
 import BaseLayout from './BaseLayout.astro';
+import '../styles/MarkdownPost-Prince.css';
 const { frontmatter } = Astro.props;
 ---
 <BaseLayout pageTitle={frontmatter.title}>
@@ -11,10 +13,20 @@ const { frontmatter } = Astro.props;
         <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
         ))}
     </div>
-    <slot />
+    <div class="markdown-prince">
+      <slot />
+    </div>
+    <div class="back-to-top-container">
+      <BackToTop />
+    </div>
 </BaseLayout>
 
 <style>
+  .back-to-top-container {
+    /* 确保容器不影响页面布局 */
+    position: relative;
+    width: 100%;
+  }
   .tags {
     display: flex;
     flex-wrap: wrap;

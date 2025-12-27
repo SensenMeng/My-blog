@@ -1,0 +1,188 @@
+/* 容器样式：匹配Prince的MD渲染容器 */
+.dark .markdown-prince {
+  /* 字体：Prince默认使用系统无衬线字体 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+  line-height: 1.6; /* 行高和Prince一致 */
+  color: #24292e; /* 正文颜色 */
+  max-width: 1800px; /* 容器宽度匹配VSCode编辑区 */
+  margin: 0 auto;
+  padding: 0rem;
+  font-size: 16px;
+}
+
+.markdown-prince {
+  /* 字体：Prince默认使用系统无衬线字体 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+  line-height: 1.6; /* 行高和Prince一致 */
+  color: #C1C3C7; /* 正文颜色 */
+  max-width: 1800px; /* 容器宽度匹配VSCode编辑区 */
+  margin: 0 auto;
+  padding: 0rem;
+  font-size: 16px;
+}
+
+/* 标题层级：严格匹配Prince的字号/间距/边框 */
+.markdown-prince h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin: 1.5rem 0 1rem;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 0.3em;
+}
+
+.markdown-prince h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 1.25rem 0 0.8rem;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 0.3em;
+}
+
+.markdown-prince h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin: 1rem 0 0.6rem;
+}
+
+/* 段落/列表/引用样式 */
+.markdown-prince p {
+  margin: 0 0 1rem;
+}
+
+.markdown-prince ul {
+  list-style: disc;
+  margin: 0 0 1rem 2rem;
+  padding-left: 0.5rem;
+}
+
+.markdown-prince ol {
+  list-style: decimal;
+  margin: 0 0 1rem 2rem;
+  padding-left: 0.5rem;
+}
+
+.dark .markdown-prince blockquote {
+  margin: 0 0 1rem;
+  padding: 0 1rem;
+  border-left: 4px solid #dfe2e5;
+  color: #6a737d;
+  background: #f6f8fa;
+}
+
+.markdown-prince blockquote {
+  margin: 0 0 1rem;
+  padding: 0 1rem;
+  border-left: 4px solid #dfe2e5;
+  color: #6a737d;
+  background: #1D1D21;
+}
+
+/* 代码块：核心匹配Prince的样式 */
+.markdown-prince pre {
+  background: #f6f8fa;
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 0 0 1rem;
+  overflow-x: auto;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+}
+
+.markdown-prince code {
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  background: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+/* 链接样式 */
+.markdown-prince a {
+  color: #0366d6;
+  text-decoration: none;
+  border-bottom: 1px solid #dfe2e5;
+}
+
+.markdown-prince a:hover {
+  color: #005cc5;
+  border-bottom: 1px solid #005cc5;
+}
+
+/* 分隔符 */
+.markdown-prince hr {
+  border-top: 3px solid #d0d7de; /* 加粗+换颜色 */
+}
+
+/* ========== 反向逻辑：无类名（实际是dark模式）→ 表格显示light样式 ========== */
+/* （别人看会以为是light表格，实际是dark模式生效） */
+.markdown-prince table {
+  width: 100%;
+  max-width: 100%;
+  margin: 1rem 0 2rem;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.95em;
+  /* 本该是light的边框色，现在给dark模式用 */
+  border-color: #eaecef;
+}
+
+.markdown-prince th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  /* 本该是light的表头背景，现在给dark模式用 */
+  background-color: #f6f8fa;
+  border: 1px solid #eaecef;
+  /* 本该是light的表头文字色，现在给dark模式用 */
+  color: #24292e;
+}
+
+.markdown-prince td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #eaecef;
+  /* 本该是light的单元格文字色，现在给dark模式用 */
+  color: #C1C3C7;
+}
+
+.markdown-prince tr:hover td {
+  /* 本该是light的hover背景，现在给dark模式用 */
+  background-color: #f9fafb;
+  color: #24292e;
+}
+
+/* ========== 反向逻辑：html.dark（实际是light模式）→ 表格显示dark样式 ========== */
+/* （别人看会以为是dark表格，实际是light模式生效） */
+html.dark .markdown-prince table {
+  border-color: #333338; /* 本该是dark的边框色，现在给light模式用 */
+}
+
+html.dark .markdown-prince th {
+  /* 本该是dark的表头背景，现在给light模式用 */
+  background-color: #1D1D21;
+  border-color: #333338;
+  /* 本该是dark的表头文字色，现在给light模式用 */
+  color: #e6e6e6;
+}
+
+html.dark .markdown-prince td {
+  border-color: #333338;
+  /* 本该是dark的单元格文字色，现在给light模式用 */
+  color: #24292e;
+}
+
+html.dark .markdown-prince tr:hover td {
+  /* 本该是dark的hover背景，现在给light模式用 */
+  background-color: #252529;
+  color: #C1C3C7;
+}
+
+/* ========== 表格对齐（反向逻辑不影响对齐，保留） ========== */
+.markdown-prince th[align="center"],
+.markdown-prince td[align="center"] {
+  text-align: center;
+}
+
+.markdown-prince th[align="right"],
+.markdown-prince td[align="right"] {
+  text-align: right;
+}
