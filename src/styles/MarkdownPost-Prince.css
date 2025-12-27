@@ -214,41 +214,41 @@ html.dark .markdown-prince tr:hover td {
 .markdown-prince div.mathjax-container,
 .markdown-prince [id^="MathJax-Element"] {
   /* 关键：开启横向滚动，避免公式溢出被挤压 */
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
+  overflow-x: auto ;
+  overflow-y: hidden ;
   /* 限制最大宽度为屏幕宽度，左右留边避免贴边 */
-  max-width: calc(100vw - 20px) !important;
-  width: 100% !important;
+  max-width: calc(100vw - 20px) ;
+  width: 100% ;
   /* 居中显示，防止缩在左侧 */
-  margin: 1rem auto !important;
-  padding: 0.5rem 0 !important;
+  margin: 1rem auto ;
+  padding: 0.5rem 0 ;
   /* 禁止MathJax默认的溢出隐藏 */
-  display: block !important;
-  position: relative !important;
-  left: 0 !important;
-  transform: none !important;
+  display: block ;
+  position: relative ;
+  left: 0 ;
+  transform: none ;
 }
 
 /* 2. 行内公式（$...$）适配 */
 .markdown-prince .MathJax,
 .markdown-prince span.math-inline {
   /* 行内公式不挤压文字，超出可滚动 */
-  white-space: nowrap !important;
-  max-width: 100% !important;
-  display: inline-block !important;
-  vertical-align: middle !important;
-  padding: 0.1rem 0.2rem !important;
+  white-space: nowrap ;
+  max-width: 100% ;
+  display: inline-block ;
+  vertical-align: middle ;
+  padding: 0.1rem 0.2rem ;
 }
 
 /* 3. 强制MathJax不缩放公式（核心修复缩在左侧的问题） */
 .markdown-prince .MathJax svg,
 .markdown-prince .MathJax_Cell {
-  transform: none !important;
-  scale: 1 !important;
-  width: auto !important;
-  height: auto !important;
+  transform: none ;
+  scale: 1 ;
+  width: auto ;
+  height: auto ;
   /* 禁止公式被强制缩小 */
-  min-width: unset !important;
+  min-width: unset ;
 }
 
 /* 4. 移动端优化 */
@@ -256,30 +256,30 @@ html.dark .markdown-prince tr:hover td {
   /* 块级公式：优化滚动体验 */
   .markdown-prince .MathJax_Display {
     /* 移动端顺滑滚动 */
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: thin !important;
+    -webkit-overflow-scrolling: touch ;
+    scrollbar-width: thin ;
     /* 适当缩小公式字号，减少宽度压力 */
-    font-size: 0.9rem !important;
+    font-size: 0.9rem ;
   }
   
   /* 行内公式：进一步适配移动端文字排版 */
   .markdown-prince .MathJax {
-    font-size: 0.85rem !important;
+    font-size: 0.85rem ;
   }
   
   /* 优化滚动条样式（可选，更美观） */
   .markdown-prince .MathJax_Display::-webkit-scrollbar {
-    height: 3px !important;
+    height: 3px ;
   }
   .markdown-prince .MathJax_Display::-webkit-scrollbar-thumb {
-    background-color: #ddd !important;
-    border-radius: 2px !important;
+    background-color: #ddd ;
+    border-radius: 2px ;
   }
   
   /* 可选：隐藏滚动条（仍可滑动） */
   /*
   .markdown-prince .MathJax_Display::-webkit-scrollbar {
-    display: none !important;
+    display: none ;
   }
   */
 
@@ -290,7 +290,7 @@ html.dark .markdown-prince tr:hover td {
 
 /* 5. 兜底：确保父容器不限制公式宽度 */
 .markdown-prince {
-  overflow-x: visible !important;
-  padding: 0 10px !important; /* 移动端左右留边 */
-  max-width: 100% !important;
+  overflow-x: visible ;
+  padding: 0 10px ; /* 移动端左右留边 */
+  max-width: 100% ;
 }
