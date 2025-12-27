@@ -81,14 +81,21 @@ $ \boldsymbol{x} = c_1 \boldsymbol{\xi}_{i1} + c_2 \boldsymbol{\xi}_{i2} + \cdot
 没错！是性质！
 
 **性质 6.1.1** 设 $ n $ 阶矩阵 $ \boldsymbol{A} = (a_{ij})_{n \times n} $ 的全部特征值为 $ \lambda_1, \lambda_2, \cdots, \lambda_n $，则有
-1. $ \lambda_1 \lambda_2 \cdots \lambda_n = \det(\boldsymbol{A}) $  
-2. $ \lambda_1 + \lambda_2 + \cdots + \lambda_n = a_{11} + a_{22} + \cdots + a_{nn} $.
+<div class = "math-container">
 
+1. $ \lambda_1 \lambda_2 \cdots \lambda_n = \det(\boldsymbol{A}) $ 
+ 
+2. $ \lambda_1 + \lambda_2 + \cdots + \lambda_n = a_{11} + a_{22} + \cdots + a_{nn} $.
+</div>
 >这个性质神奇且诡异
 
+<div style = "color : red;">ps : 温馨提示，上面这两个公式是可以横向滑动的，后面的也如此。</div>
+
 **性质 6.1.2** 设 $ \lambda $ 为矩阵 $ \boldsymbol{A} $ 的一个特征值且 $ \boldsymbol{x} $ 为对应的一个特征向量，则
+
 1. 对任何正整数 $ m $，$ \lambda^m $ 为矩阵 $ \boldsymbol{A}^m $ 的一个特征值且 $ \boldsymbol{x} $ 为对应的一个特征向量；
-2. 对任何多项式 $ f(x) = a_m x^m + a_{m-1} x^{m-1} + \cdots + a_1 x + a_0 $，$ f(\lambda) $ 为矩阵 $ f(\boldsymbol{A}) = a_m \boldsymbol{A}^m + a_{m-1} \boldsymbol{A}^{m-1} + \cdots + a_1 \boldsymbol{A} + a_0 \boldsymbol{I} $ 的一个特征值且 $ \boldsymbol{x} $ 为对应的一个特征向量.
+2. 对任何多项式 <div class = "math-container"> $ f(x) = a_m x^m + a_{m-1} x^{m-1} + \cdots + a_1 x + a_0 $</div>，$ f(\lambda) $  为矩阵 <div class = "math-container"> $ f(\boldsymbol{A}) = a_m \boldsymbol{A}^m + a_{m-1} \boldsymbol{A}^{m-1} + \cdots + a_1 \boldsymbol{A} + a_0 \boldsymbol{I} $ </div> 的一个特征值且 $ \boldsymbol{x} $ 为对应的一个特征向量.
+
 
 **性质 6.1.3** 设 $ \lambda $ 为 $ n $ 阶可逆矩阵 $ \boldsymbol{A} $ 的一个特征值，则 $ \lambda \neq 0 $，且 $ \frac{1}{\lambda} $ 为 $ \boldsymbol{A}^{-1} $ 的一个特征值，$ \frac{\det(\boldsymbol{A})}{\lambda} $ 为 $ \boldsymbol{A} $ 的伴随矩阵 $ \boldsymbol{A}^* $ 的一个特征值.
 
@@ -98,13 +105,13 @@ $ \boldsymbol{x} = c_1 \boldsymbol{\xi}_{i1} + c_2 \boldsymbol{\xi}_{i2} + \cdot
 
 
 **性质 6.1.4'** 设 $ \lambda_1, \lambda_2, \cdots, \lambda_m $ 是矩阵 $ \boldsymbol{A} $ 的互不相同的特征值，$ \boldsymbol{\alpha}_{i1}, \boldsymbol{\alpha}_{i2}, \cdots, \boldsymbol{\alpha}_{ik_i} $ 为属于 $ \lambda_i $ 的一组线性无关特征向量 $ (i = 1, 2, \cdots, m) $，则向量组
+<div class = "math-container">
 $$
 \boldsymbol{\alpha}_{11}, \boldsymbol{\alpha}_{12}, \cdots, \boldsymbol{\alpha}_{1k_1}
-
 \boldsymbol{\alpha}_{21}, \boldsymbol{\alpha}_{22}, \cdots, \boldsymbol{\alpha}_{2k_2}
-
 \boldsymbol{\alpha}_{m1}, \boldsymbol{\alpha}_{m2}, \cdots, \boldsymbol{\alpha}_{mk_m}\tag{6.1.14}
 $$
+</div>
 
 线性无关.
 
