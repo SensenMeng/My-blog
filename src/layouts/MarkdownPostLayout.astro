@@ -1,7 +1,9 @@
 ---
 import BackToTop from '../components/BackToTop.astro';
 import BaseLayout from './BaseLayout.astro';
+import Comments from '../components/Comments.astro';
 import '../styles/MarkdownPost-Prince.css';
+
 const { frontmatter } = Astro.props;
 ---
 <BaseLayout pageTitle={frontmatter.title}>
@@ -19,6 +21,7 @@ const { frontmatter } = Astro.props;
     <div class="back-to-top-container">
       <BackToTop />
     </div>
+    <Comments title={frontmatter.title} />
 </BaseLayout>
 
 <style>

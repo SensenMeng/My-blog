@@ -188,7 +188,7 @@ $P = \begin{bmatrix} \boldsymbol{x}_1 & \boldsymbol{x}_2 & \cdots & \boldsymbol{
 </div>
 
 亦即
-$ \begin{bmatrix} A\boldsymbol{x}_1 & A\boldsymbol{x}_2 & \cdots & A\boldsymbol{x}_n \end{bmatrix} = \begin{bmatrix} \lambda_1\boldsymbol{x}_1 & \lambda_2\boldsymbol{x}_2 & \cdots & \lambda_n\boldsymbol{x}_n \end{bmatrix} $
+<div class = "math-container">$ \begin{bmatrix} A\boldsymbol{x}_1 & A\boldsymbol{x}_2 & \cdots & A\boldsymbol{x}_n \end{bmatrix} = \begin{bmatrix} \lambda_1\boldsymbol{x}_1 & \lambda_2\boldsymbol{x}_2 & \cdots & \lambda_n\boldsymbol{x}_n \end{bmatrix} $</div>
 或
 $ A\boldsymbol{x}_i = \lambda_i \boldsymbol{x}_i, \quad i = 1,2,\dots,n. \tag{6.2.4} $
 因 $ \boldsymbol{x}_i \neq \boldsymbol{0} $，故 $ \lambda_i $ 为 $ A $ 的特征值，$ \boldsymbol{x}_i $ 为对应于 $ \lambda_i $ 的特征向量 $ (i=1,2,\dots,n) $。所以 $ A $ 有 $ n $ 个线性无关的特征向量 $ \boldsymbol{x}_1, \boldsymbol{x}_2, \dots, \boldsymbol{x}_n $。

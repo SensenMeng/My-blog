@@ -1,0 +1,105 @@
+---
+// src/components/Comments.astro
+interface Props {
+  // 每篇博客的唯一标识（用文章标题或 slug）
+  title: string;
+  // 可选：自定义评论区标题
+  commentTitle?: string;
+}
+
+const { title, commentTitle = "宝子来评论呀~ 💬" } = Astro.props;
+
+// 对标题进行转义，避免特殊字符导致问题
+const encodedTitle = encodeURIComponent(title);
+---
+
+<section class="comments-container" aria-label="评论区">
+  <h3 class="comments-title">{commentTitle}</h3>
+  <!-- Giscus 评论框容器 -->
+  <div id="giscus-comments"></div>
+
+  <!-- 引入 Giscus 脚本（替换成你自己的配置） -->
+  <script src="https://giscus.app/client.js"
+        data-repo="SensenMeng/My-blog"
+        data-repo-id="R_kgDOQrksIw"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOQrksI84C0UBT"
+        data-mapping="title"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="1"
+        data-input-position="top"
+        data-theme="light"
+        data-loading="lazy"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+    </script>
+
+<!-- 修复版暗黑模式脚本（核心：等待 iframe 加载 + 重试机制） -->
+  <script is:inline>
+    // 核心函数：发送主题切换指令（加重试）
+    const setGiscusTheme = (isDark, retryCount = 3) => {
+      const giscusFrame = document.querySelector('iframe.giscus-frame');
+      
+      // 1. 如果没找到 iframe，重试（最多3次）
+      if (!giscusFrame && retryCount > 0) {
+        setTimeout(() => setGiscusTheme(isDark, retryCount - 1), 500);
+        return;
+      }
+      
+      // 2. 找到 iframe 后发送指令
+      if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+          {
+            giscus: {
+              setConfig: {
+                theme: isDark ? 'light' : 'dark' // 暗黑=dark，浅色=light
+              }
+            }
+          },
+          'https://giscus.app' // 必须指定 Giscus 域名，否则消息会被拦截
+        );
+      }
+    };
+
+    // 2. 监听 iframe 加载完成（关键！）
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach(() => {
+        const isDark = document.documentElement.classList.contains('dark');
+        setGiscusTheme(isDark);
+      });
+    });
+
+    // 监听评论区容器，等待 iframe 出现
+    observer.observe(document.getElementById('giscus-comments'), {
+      childList: true,
+      subtree: true
+    });
+
+    // 3. 页面加载完成后初始化
+    window.addEventListener('load', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setGiscusTheme(isDark);
+    });
+
+    // 4. 监听暗黑模式切换（html 类名变化）
+    const htmlObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          const isDark = document.documentElement.classList.contains('dark');
+          setGiscusTheme(isDark);
+        }
+      });
+    });
+    htmlObserver.observe(document.documentElement, { attributes: true });
+
+    // 可选：手动测试按钮（方便你验证，可删除）
+    // document.body.insertAdjacentHTML('beforeend', `
+    //   <button style="position:fixed;top:20px;right:20px;z-index:9999" onclick="document.documentElement.classList.toggle('dark');setGiscusTheme(document.documentElement.classList.contains('dark'))">
+    //     切换暗黑模式
+    //   </button>
+    // `);
+  </script>
+</section>
+

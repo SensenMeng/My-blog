@@ -1,6 +1,7 @@
 ---
 import "../layouts/BaseLayout.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Comments from "../components/Comments.astro";
 
 const pageTitle = "关于森森";
 const identity = {
@@ -10,7 +11,7 @@ const identity = {
     university: "XJTU",
     hobbies: ["敲代码","敲代码","敲他妈的代码"]
 };
-const skills = ["C++","python"];
+const skills = ["C++","python","html","Javascript","css"];
 
 const skillColor = "crimson";
 const fontWeight = "bold";
@@ -49,6 +50,15 @@ const textCase = "capitalize";
             {skills.map((skill)=><li class="skill">{skill}</li>)}
         </ul>
     <h2>使用的工具？</h2>
-
-        <p>Astro~</p>
+        <ul>
+            <li>网页搭建：Astro</li>
+            <li>博客撰写：Markdown Latex(转换工具MathJax)</li>
+            <li>评论区嵌入：giscus</li>
+            <li>网页托管：netlify</li>
+        </ul>
+    
+    <h2>最后想给大家说的</h2>
+    <p>这是一个非常<span style="color: red; font-weight: bold;">无知且愚蠢</span>的人，如果你发现我的博客有错别字，或者对我的网页有很好的建议，欢迎联系。</p>
+    <p>孟某在此不胜感激！</p>
+    <Comments title="关于森森"/>
 </BaseLayout>
