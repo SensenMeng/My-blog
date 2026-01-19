@@ -22,6 +22,7 @@
     "remark-rehype": "^11.1.2"
   },
   "devDependencies": {
+    "@astrojs/netlify": "^6.6.4",
     "@astrojs/node": "^9.5.2",
     "@types/node": "^25.0.9",
     "remark-math": "^6.0.0"
