@@ -5,7 +5,7 @@ author: MSensen
 description: 本人关于线性代数第六章的一些理解和拓展
 image: none
 pubDate: 2025-12-27
-tags: ["线性代数","特征值与特征向量"]
+tags: ["学习笔记与知识整理"]
 ---
 
 ## 前言

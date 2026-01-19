@@ -1,0 +1,266 @@
+---
+// BlogAIQA.astro - 最终版：默认=暗色，html.dark=亮色，切换实时生效
+interface Props {
+  placeholder?: string;
+}
+const { placeholder = '请输入关于博客的问题...' } = Astro.props;
+---
+
+<div class="blog-ai-qa">
+  <h3 class="qa-title">💡 博客智能问答</h3>
+  <div class="qa-container">
+    <textarea id="question-input" placeholder={placeholder} rows="3" class="qa-input"></textarea>
+    <button id="send-btn" class="qa-btn">发送</button>
+    <div id="loading" class="qa-loading" style="display: none;">
+      <span class="loading-dot"></span>
+      <span class="loading-text">正在为你检索答案...</span>
+    </div>
+    <div id="answer-container" class="qa-answer"></div>
+  </div>
+</div>
+
+<style>
+/* 全局通用样式 & 重置 */
+.blog-ai-qa * { margin: 0; padding: 0; box-sizing: border-box; }
+.blog-ai-qa {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  font-family: sans-serif;
+  transition: all 0.3s ease;
+}
+.qa-title {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.qa-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  opacity: 0.7;
+  background: linear-gradient(90deg, #1A1B1F, transparent);
+}
+.qa-container { display: flex; flex-direction: column; gap: 1.2rem; }
+.qa-input {
+  padding: 1rem 1.2rem;
+  border: 1px solid;
+  border-radius: 10px;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 100px;
+  max-height: 300px;
+  font-family: sans-serif;
+  line-height: 1.5;
+  outline: none;
+  transition: all 0.3s ease;
+}
+.qa-btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  background: #1A1B1F;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.qa-btn:hover {
+  background: #28292E;
+  transform: translateY(-2px);
+}
+.qa-btn:active {
+  transform: translateY(0);
+  background: #1A1B1F;
+}
+.qa-btn:disabled {
+  background: #757575;
+  transform: none;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.qa-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.loading-dot::before {
+  content: '...';
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  animation: dot-flash 1.5s infinite linear;
+}
+@keyframes dot-flash {
+  0%, 100% { opacity: 0.2; }
+  25% { opacity: 1; }
+  50% { opacity: 0.2; }
+  75% { opacity: 1; }
+}
+.loading-text { font-style: italic; }
+.qa-answer {
+  padding: 1.5rem 1.2rem;
+  border: 1px solid;
+  border-radius: 10px;
+  min-height: 100px;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  font-size: 1rem;
+  font-family: sans-serif;
+  transition: all 0.3s ease;
+}
+.qa-answer > div:has(> ❌), .qa-answer > span:contains('❌') {
+  color: #F44336 !important;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* 👇👇👇 核心1：默认状态（无html.dark）= 暗色模式（你的基础样式）【优先级基础】 */
+.blog-ai-qa {
+  background: #13161C !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid #222327 !important;
+}
+.qa-title { color: #C1C3C7 !important; }
+.qa-input {
+  background: #1A1B1F !important;
+  color: #C1C3C7 !important;
+  border-color: #222327 !important;
+}
+.qa-input::placeholder { color: #888888 !important; }
+.qa-input:focus {
+  border-color: #1A1B1F !important;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1) !important;
+}
+.qa-btn {
+  color: #C1C3C7 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+.qa-btn:hover { box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2) !important; }
+.qa-btn:active { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important; }
+.qa-btn:disabled { background: #9E9E9E !important; }
+.qa-loading { color: #9E9E9E !important; }
+.qa-answer {
+  background: #1A1B1F !important;
+  color: #C1C3C7 !important;
+  border-color: #222327 !important;
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 👇👇👇 核心2：html.dark = 亮色模式（你的反转样式）【优先级更高】 */
+html.dark .blog-ai-qa {
+  background: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid #E0E0E0 !important;
+}
+html.dark .qa-title { color: #000000 !important; }
+html.dark .qa-input {
+  background: #F5F5F5 !important;
+  color: #000000 !important;
+  border-color: #E0E0E0 !important;
+}
+html.dark .qa-input::placeholder { color: #B0B0B0 !important; }
+html.dark .qa-input:focus {
+  border-color: #1A1B1F !important;
+  box-shadow: 0 0 0 3px rgba(26, 27, 31, 0.1) !important;
+}
+html.dark .qa-btn {
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+html.dark .qa-btn:hover { box-shadow: 0 4px 10px rgba(26, 27, 31, 0.2) !important; }
+html.dark .qa-btn:active { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important; }
+html.dark .qa-loading { color: #757575 !important; }
+html.dark .qa-answer {
+  background: #F5F5F5 !important;
+  color: #000000 !important;
+  border-color: #E0E0E0 !important;
+  box-shadow: inset 0 1px 3px rgba(26, 27, 31, 0.1) !important;
+}
+
+/* 响应式适配（和你的全局断点一致） */
+@media screen and (max-width: 636px) {
+  .blog-ai-qa {
+    margin: 1.5rem auto;
+    padding: 1.5rem 1rem;
+  }
+  .qa-title { font-size: 1.1rem; margin-bottom: 1.2rem; }
+  .qa-input { padding: 0.8rem 1rem; font-size: 0.95rem; min-height: 80px; }
+  .qa-btn { padding: 0.5rem 1rem; font-size: 1rem; }
+  .qa-answer { padding: 1.2rem 1rem; font-size: 0.95rem; }
+}
+@media screen and (max-width: 480px) {
+  .blog-ai-qa { margin: 1rem auto; padding: 1rem; }
+}
+</style>
+
+<script>
+// 保留所有功能 + 强制样式重绘（切换必生效）
+const questionInput = document.getElementById('question-input')! as HTMLTextAreaElement;
+const sendBtn = document.getElementById('send-btn')! as HTMLButtonElement;
+const loading = document.getElementById('loading')! as HTMLDivElement;
+const answerContainer = document.getElementById('answer-container')! as HTMLDivElement;
+const qaComponent = document.querySelector('.blog-ai-qa')!;
+
+if (!questionInput || !sendBtn || !loading || !answerContainer) {
+  console.error('❌ 缺少必要的DOM元素，请检查ID拼写是否正确');
+} else {
+  // 核心请求函数
+  async function sendQuestion() {
+    const question = questionInput.value.trim();
+    if (!question) {
+      answerContainer.innerHTML = `<div>❌ 请输入你的问题～</div>`;
+      return;
+    }
+    sendBtn.disabled = true;
+    loading.style.display = 'flex';
+    answerContainer.innerHTML = '';
+    answerContainer.style.opacity = '0';
+
+    try {
+      const response = await fetch('/api/ask-blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || '请求失败，请稍后再试');
+      answerContainer.innerHTML = data.answer;
+      setTimeout(() => answerContainer.style.opacity = '1', 100);
+    } catch (error) {
+      answerContainer.innerHTML = `❌ 出错了：${error instanceof Error ? error.message : '未知错误'}`;
+      answerContainer.style.opacity = '1';
+    } finally {
+      sendBtn.disabled = false;
+      loading.style.display = 'none';
+    }
+  }
+
+  // 事件绑定：点击发送 + Ctrl+Enter发送
+  sendBtn.addEventListener('click', sendQuestion);
+  questionInput.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'Enter') { sendQuestion(); e.preventDefault(); }
+  });
+  // 聚焦清空错误提示
+  questionInput.addEventListener('focus', () => {
+    if (answerContainer.innerHTML.includes('❌')) {
+      answerContainer.innerHTML = '';
+      answerContainer.style.opacity = '1';
+    }
+  });
+
+  // 初始化
+  answerContainer.style.opacity = '1';
+}
+</script>
