@@ -108,7 +108,7 @@ If you think so, 那么说明你是2020年之后的高考考生，详见如下�
 创新港校区和兴庆校区的距离比较远，所以学校为我们安排了大巴车。去的路上很顺利，经过了立交桥，看到了很美丽的风景。
 
 <div align="center">
-    <img src="/public/images/chaungxingang.jpg" alt="创新港"  class="md-img">
+    <img src="/images/chaungxingang.jpg" alt="创新港"  class="md-img">
     <p>创新港</p>
 </div>
 

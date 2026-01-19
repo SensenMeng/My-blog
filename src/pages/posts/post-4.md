@@ -135,14 +135,14 @@ tags: ["成长与经历"]
 **Duvet（Bôa）**
 
 <audio controls style="width: 100%;">
-  <source src="/public/music/Bôa - Duvet.mp3" type="audio/mpeg">
+  <source src="/music/Bôa - Duvet.mp3" type="audio/mpeg">
   你的浏览器不支持音频播放，请升级浏览器
 </audio>
 
 **为世界之光**
 
 <audio controls style="width: 100%;">
-  <source src="/public/music/群星 - 为世界之光.mp3" type="audio/mpeg">
+  <source src="/music/群星 - 为世界之光.mp3" type="audio/mpeg">
   你的浏览器不支持音频播放，请升级浏览器
 </audio>
 
