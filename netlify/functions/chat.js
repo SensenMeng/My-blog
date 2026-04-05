@@ -1,8 +1,31 @@
 require('dotenv').config();
 
+const rateLimit = new Map();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1分钟
+const MAX_REQUESTS = 3; // 每分钟最多3次
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
+  }
+
+  const clientIp = event.headers['x-nf-client-connection-ip'] || 'unknown';
+  const now = Date.now();
+  const userData = rateLimit.get(clientIp) || { count: 0, resetTime: now + RATE_LIMIT_WINDOW };
+
+  if (now > userData.resetTime) {
+    userData.count = 1;
+    userData.resetTime = now + RATE_LIMIT_WINDOW;
+  } else {
+    userData.count += 1;
+  }
+  rateLimit.set(clientIp, userData);
+
+  if (userData.count > MAX_REQUESTS) {
+    return {
+      statusCode: 429,
+      body: JSON.stringify({ error: '请求过于频繁，请1分钟后再试' })
+    };
   }
 
   try {
@@ -13,11 +36,11 @@ exports.handler = async (event) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        'Authorization': 'Bearer ' + apiKey
       },
       body: JSON.stringify({
         model: "deepseek-chat",
-        stream: false,  // 👈 关闭流式
+        stream: false,
         messages: [
           {
             role: "system",
