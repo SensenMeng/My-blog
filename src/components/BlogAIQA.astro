@@ -7,7 +7,7 @@ const { placeholder = '请输入关于博客的问题...' } = Astro.props;
 ---
 
 <div class="blog-ai-qa">
-  <h3 class="qa-title">💡 博客智能问答</h3>
+  <h3 class="qa-title">💡 博客智能问答（已嵌入8r规则）</h3>
   <div class="qa-container">
     <textarea id="question-input" placeholder={placeholder} rows="3" class="qa-input"></textarea>
     <button id="send-btn" class="qa-btn">发送</button>
@@ -18,6 +18,8 @@ const { placeholder = '请输入关于博客的问题...' } = Astro.props;
     <div id="answer-container" class="qa-answer"></div>
   </div>
 </div>
+
+<a href="/about#8r-rule" class="8r-link">什么是8r规则？</a>
 
 <style>
 /* 全局通用样式 & 重置 */

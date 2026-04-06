@@ -1,0 +1,391 @@
+.mini-games-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem 1rem;
+}
+
+.mini-games-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #B8C7FB;
+}
+
+.game-card {
+  background: #1A1B1F;
+  border: 1px solid #222327;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.game-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #C1C3C7;
+}
+
+.game-desc {
+  color: #888888;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.game-content {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.game-content input {
+  flex: 1;
+  min-width: 150px;
+  padding: 0.7rem;
+  background: #13161C;
+  color: #C1C3C7;
+  border: 1px solid #222327;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.game-content input:focus {
+  border-color: #4f4f4f;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.game-content input::placeholder {
+  color: #666;
+}
+
+.game-content button,
+.reset-btn {
+  padding: 0.7rem 1.5rem;
+  background: #28292E;
+  color: #C1C3C7;
+  border: 1px solid #222327;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.game-content button:hover,
+.reset-btn:hover {
+  background: #3a3b40;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(193, 195, 199, 0.2);
+}
+
+.game-content button:active,
+.reset-btn:active {
+  transform: translateY(0);
+}
+
+.game-content button:disabled {
+  background: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.result-msg {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: #13161C;
+  color: #B8C7FB;
+  border: 1px solid #222327;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.attempts {
+  width: 100%;
+  text-align: center;
+  color: #888888;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* 记忆翻牌样式 */
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.memory-card {
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #28292E 0%, #1A1B1F 100%);
+  border: 2px solid #222327;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.memory-card:hover:not(.matched) {
+  transform: scale(1.05);
+  background: #3a3b40;
+}
+
+.memory-card.flipped,
+.memory-card.matched {
+  background: #13161C;
+  border-color: #4f4f4f;
+  transform: rotateY(180deg);
+}
+
+.game-stats {
+  padding: 1rem;
+  background: #13161C;
+  border-radius: 6px;
+  text-align: center;
+  color: #888888;
+  font-weight: 500;
+}
+
+.win-msg {
+  display: block;
+  color: #76FF03;
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+/* 反应速度测试样式 */
+.reaction-btn {
+  width: 100%;
+  padding: 3rem 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  background: #28292E;
+  color: #C1C3C7;
+  border: 2px solid #222327;
+}
+
+.reaction-btn:hover {
+  background: #3a3b40;
+}
+
+.reaction-btn.waiting {
+  background: #FF9800;
+  color: white;
+  border-color: #FF9800;
+  cursor: not-allowed;
+  animation: pulse-orange 0.5s ease-in-out infinite;
+}
+
+.reaction-btn.ready {
+  background: #76FF03;
+  color: #000;
+  border-color: #76FF03;
+  font-size: 1.8rem;
+  animation: pulse-green 0.2s ease-in-out infinite;
+}
+
+.reaction-btn.done {
+  background: #13161C;
+  color: #76FF03;
+  border-color: #76FF03;
+}
+
+/* 视力测试样式 */
+.vision-grid {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.vision-cell {
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.vision-cell:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.18) inset;
+}
+
+.vision-cell.found {
+  box-shadow: 0 0 0 3px #76FF03 inset;
+}
+
+.vision-cell.wrong {
+  box-shadow: 0 0 0 3px #FF5252 inset;
+  transform: scale(0.98);
+}
+
+.vision-controls {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@keyframes pulse-orange {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(255, 152, 0, 0);
+  }
+}
+
+@keyframes pulse-green {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(118, 255, 3, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(118, 255, 3, 0);
+  }
+}
+
+/* 字体变色（随机亮色） */
+html.dark .mini-games-container h2 {
+  color: #000000;
+}
+
+html.dark .game-card {
+  background: #f5f5f5;
+  border-color: #e0e0e0;
+}
+
+html.dark .game-card h3 {
+  color: #000000;
+}
+
+html.dark .game-desc {
+  color: #757575;
+}
+
+html.dark .game-content input {
+  background: #ffffff;
+  color: #000000;
+  border-color: #e0e0e0;
+}
+
+html.dark .game-content input:focus {
+  border-color: #999;
+  box-shadow: 0 0 0 3px rgba(26, 27, 31, 0.1);
+}
+
+html.dark .game-content input::placeholder {
+  color: #ccc;
+}
+
+html.dark .game-content button,
+html.dark .reset-btn {
+  background: #e8e8e8;
+  color: #000000;
+  border-color: #d0d0d0;
+}
+
+html.dark .game-content button:hover,
+html.dark .reset-btn:hover {
+  background: #d0d0d0;
+}
+
+html.dark .result-msg {
+  background: #ffffff;
+  color: #1A1B1F;
+  border-color: #e0e0e0;
+}
+
+html.dark .attempts {
+  color: #757575;
+}
+
+html.dark .memory-card {
+  background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+  border-color: #d0d0d0;
+}
+
+html.dark .memory-card:hover:not(.matched) {
+  background: #d0d0d0;
+}
+
+html.dark .memory-card.flipped,
+html.dark .memory-card.matched {
+  background: #ffffff;
+  border-color: #999;
+}
+
+html.dark .game-stats {
+  background: #ffffff;
+  color: #757575;
+  border-color: #e0e0e0;
+}
+
+html.dark .reaction-btn {
+  background: #e8e8e8;
+  color: #000000;
+  border-color: #d0d0d0;
+}
+
+html.dark .reaction-btn:hover {
+  background: #d0d0d0;
+}
+
+html.dark .vision-cell {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+html.dark .vision-cell:hover {
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12) inset;
+}
+
+/* 响应式设计 */
+@media (max-width: 636px) {
+  .mini-games-container {
+    padding: 1rem;
+  }
+
+  .mini-games-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .game-card {
+    padding: 1rem;
+  }
+
+  .memory-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .reaction-btn {
+    padding: 2rem 1rem;
+    font-size: 1.2rem;
+  }
+
+  .vision-grid {
+    gap: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .memory-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .memory-card {
+    font-size: 1.5rem;
+  }
+}

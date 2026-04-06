@@ -4,7 +4,7 @@ title: 130感言
 author: MSensen
 description: 值交大建校130周年，西迁70周年，近代史恰讲1896，百感交集成此文。
 image: none
-pubDate: 2026-3-13
+pubDate: 2026-4-4
 tags: ["日常小思考","成长与经历"]
 ---
 

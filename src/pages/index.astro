@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Greeting from '../components/Greeting';
+import MiniGames from '../components/MiniGames.astro';
 import HeadImage from '../../public/images/headimage.jpg'
 import { Picture } from 'astro:assets';
 const pageTitle = "森森的主页";
@@ -24,6 +25,8 @@ const pageTitle = "森森的主页";
   </div>
 
   <Greeting client:load messages={["祝福西安交大130岁生日快乐！", "热烈庆祝西交大西迁70周年！", "百卅辉光，七秩日新！", "精勤求学，敦笃励志，果毅力行，忠恕任事‌。"]} />
+
+  <MiniGames />
 
   <style>
     .img-info-container {

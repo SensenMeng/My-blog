@@ -1,0 +1,363 @@
+---
+// MiniGames.astro - 纯 Astro 组件，不依赖 React
+import '../styles/mini-games.css';
+---
+
+<div class="mini-games-container">
+  <h2>🎮 小游戏集合</h2>
+
+  <!-- 数字猜谜 -->
+  <div class="game-card">
+    <h3>1️⃣ 数字猜谜</h3>
+    <p class="game-desc">来猜一个1-100的数字（二分查找更快哦～）</p>
+    <div class="game-content">
+      <input
+        id="number-input"
+        type="number"
+        min="1"
+        max="100"
+        placeholder="输入你的猜测..."
+      />
+      <button id="number-btn">猜一下</button>
+    </div>
+    <div id="number-msg" class="result-msg" style="display: none;"></div>
+    <p id="number-attempts" class="attempts" style="display: none;"></p>
+    <button id="number-reset" class="reset-btn" style="display: none;">🔄 再来一次</button>
+  </div>
+
+  <!-- 记忆翻牌 -->
+  <div class="game-card">
+    <h3>2️⃣ 记忆翻牌</h3>
+    <p class="game-desc">跟我一起预防老年痴呆！</p>
+    <div class="memory-grid" id="memory-grid"></div>
+    <div class="game-stats" id="memory-stats">步数: 0 | 已找到: 0/12</div>
+    <button id="memory-reset-btn" class="reset-btn" style="display: none;">🔄 再玩一次</button>
+  </div>
+
+  <!-- 反应速度测试 -->
+  <div class="game-card">
+    <h3>3️⃣ 反应速度测试</h3>
+    <p class="game-desc">老牌csgo玩家？</p>
+    <button id="reaction-btn" class="reaction-btn">点击开始</button>
+  </div>
+
+  <!-- 视力测试 -->
+  <div class="game-card">
+    <h3>4️⃣ 视力测试</h3>
+    <p class="game-desc">你需要一个好的显示器。</p>
+    <div id="vision-status" class="game-stats">第1关 | 3x3 | 找到不同色块</div>
+    <div id="vision-grid" class="vision-grid" aria-label="vision-test-grid"></div>
+    <div class="vision-controls">
+      <button id="vision-reset-btn" class="reset-btn">🔄 重新开始</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initMiniGames() {
+  // ========== 数字猜谜 ==========
+  const numberInput = document.getElementById('number-input');
+  const numberBtn = document.getElementById('number-btn');
+  const numberMsg = document.getElementById('number-msg');
+  const numberAttempts = document.getElementById('number-attempts');
+  const numberReset = document.getElementById('number-reset');
+
+  const memoryGrid = document.getElementById('memory-grid');
+  const memoryStats = document.getElementById('memory-stats');
+  const memoryResetBtn = document.getElementById('memory-reset-btn');
+
+  const reactionBtn = document.getElementById('reaction-btn');
+  const visionStatus = document.getElementById('vision-status');
+  const visionGrid = document.getElementById('vision-grid');
+  const visionResetBtn = document.getElementById('vision-reset-btn');
+
+  if (
+    !(numberInput instanceof HTMLInputElement) ||
+    !(numberBtn instanceof HTMLButtonElement) ||
+    !(numberMsg instanceof HTMLDivElement) ||
+    !(numberAttempts instanceof HTMLParagraphElement) ||
+    !(numberReset instanceof HTMLButtonElement) ||
+    !(memoryGrid instanceof HTMLDivElement) ||
+    !(memoryStats instanceof HTMLDivElement) ||
+    !(memoryResetBtn instanceof HTMLButtonElement) ||
+    !(reactionBtn instanceof HTMLButtonElement) ||
+    !(visionStatus instanceof HTMLDivElement) ||
+    !(visionGrid instanceof HTMLDivElement) ||
+    !(visionResetBtn instanceof HTMLButtonElement)
+  ) {
+    return;
+  }
+
+  let numberTarget = Math.floor(Math.random() * 100) + 1;
+  let numberAttemptsCount = 0;
+
+  numberBtn.addEventListener('click', () => {
+    const num = parseInt(numberInput.value);
+    if (isNaN(num)) {
+      numberMsg.textContent = '请输入有效的数字！';
+      numberMsg.style.display = 'block';
+      return;
+    }
+
+    let msg = '';
+    if (num === numberTarget) {
+      msg = `🎉 太棒了！你用 ${numberAttemptsCount + 1} 次就猜对了！`;
+      numberBtn.disabled = true;
+      numberInput.disabled = true;
+      numberReset.style.display = 'block';
+    } else if (num > numberTarget) {
+      msg = '📊 太大了，再试试！';
+    } else {
+      msg = '📊 太小了，再试试！';
+    }
+
+    numberAttemptsCount++;
+    numberMsg.textContent = msg;
+    numberMsg.style.display = 'block';
+    numberAttempts.textContent = `已尝试 ${numberAttemptsCount} 次`;
+    numberAttempts.style.display = 'block';
+    numberInput.value = '';
+  });
+
+  numberInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') numberBtn.click();
+  });
+
+  numberReset.addEventListener('click', () => {
+    numberTarget = Math.floor(Math.random() * 100) + 1;
+    numberAttemptsCount = 0;
+    numberInput.value = '';
+    numberMsg.style.display = 'none';
+    numberAttempts.style.display = 'none';
+    numberReset.style.display = 'none';
+    numberBtn.disabled = false;
+    numberInput.disabled = false;
+  });
+
+  // ========== 记忆翻牌 ==========
+  let memoryCards = [];
+  let memoryFlippedIndices = [];
+  let memoryMoves = 0;
+  let memoryMatched = 0;
+
+  function initMemoryGame() {
+    const emojis = ['🪼', '🥐', '🧸', '🩵', '🪬', '🫧'];
+    memoryCards = Array.from({ length: 12 }, (_, i) => ({
+      emoji: emojis[i % 6],
+      matched: false,
+    })).sort(() => Math.random() - 0.5);
+
+    memoryGrid.innerHTML = '';
+    memoryCards.forEach((card, index) => {
+      const cardEl = document.createElement('div');
+      cardEl.className = 'memory-card';
+      cardEl.dataset.index = String(index);
+      cardEl.innerHTML = '<span></span>';
+      cardEl.addEventListener('click', () => handleMemoryCardClick(index));
+      memoryGrid.appendChild(cardEl);
+    });
+
+    memoryFlippedIndices = [];
+    memoryMoves = 0;
+    memoryMatched = 0;
+    memoryResetBtn.style.display = 'none';
+    updateMemoryStats();
+  }
+
+  function handleMemoryCardClick(index) {
+    if (memoryMatched === 12 || memoryFlippedIndices.includes(index) || memoryCards[index].matched) {
+      return;
+    }
+
+    const cardEl = memoryGrid.querySelector(`.memory-card[data-index="${index}"]`);
+    if (!(cardEl instanceof HTMLDivElement)) {
+      return;
+    }
+
+    memoryFlippedIndices.push(index);
+    cardEl.classList.add('flipped');
+    const cardEmoji = cardEl.querySelector('span');
+    if (cardEmoji) {
+      cardEmoji.textContent = memoryCards[index].emoji;
+    }
+
+    if (memoryFlippedIndices.length === 2) {
+      const [first, second] = memoryFlippedIndices;
+      if (memoryCards[first].emoji === memoryCards[second].emoji) {
+        memoryCards[first].matched = true;
+        memoryCards[second].matched = true;
+        memoryMatched += 2;
+        memoryFlippedIndices = [];
+        memoryMoves++;
+
+        if (memoryMatched === 12) {
+          const statsDiv = document.createElement('span');
+          statsDiv.className = 'win-msg';
+          statsDiv.textContent = ' 🎉 完美！';
+          memoryStats.appendChild(statsDiv);
+          memoryResetBtn.style.display = 'block';
+        }
+      } else {
+        memoryMoves++;
+        setTimeout(() => {
+          memoryGrid.querySelectorAll('.memory-card').forEach((card) => {
+            const idx = Number((card instanceof HTMLDivElement ? card.dataset.index : '-1'));
+            if (memoryFlippedIndices.includes(idx)) {
+              card.classList.remove('flipped');
+              const span = card.querySelector('span');
+              if (span) {
+                span.textContent = '';
+              }
+            }
+          });
+          memoryFlippedIndices = [];
+        }, 800);
+      }
+      updateMemoryStats();
+    }
+  }
+
+  function updateMemoryStats() {
+    memoryStats.innerHTML = `步数: ${memoryMoves} | 已找到: ${memoryMatched}/12`;
+  }
+
+  memoryResetBtn.addEventListener('click', initMemoryGame);
+  initMemoryGame();
+
+  // ========== 反应速度测试 ==========
+  let reactionState = 'idle'; // idle, waiting, ready
+  let reactionStartTime = 0;
+
+  reactionBtn.addEventListener('click', () => {
+    if (reactionState === 'idle') {
+      startReactionTest();
+    } else if (reactionState === 'ready') {
+      finishReactionTest();
+    } else if (reactionState === 'waiting') {
+      reactionBtn.textContent = '❌ 太早了！重新开始吧';
+      reactionState = 'idle';
+      setTimeout(() => {
+        reactionBtn.textContent = '点击开始';
+        reactionBtn.classList.remove('waiting');
+      }, 1000);
+    }
+  });
+
+  function startReactionTest() {
+    reactionState = 'waiting';
+    reactionBtn.textContent = '等待绿灯...';
+    reactionBtn.classList.add('waiting');
+    const delay = Math.random() * 3000 + 1000;
+    setTimeout(() => {
+      reactionState = 'ready';
+      reactionBtn.textContent = '🟢 点击！';
+      reactionBtn.classList.remove('waiting');
+      reactionBtn.classList.add('ready');
+      reactionStartTime = Date.now();
+    }, delay);
+  }
+
+  function finishReactionTest() {
+    const time = Date.now() - reactionStartTime;
+    let result = '';
+    if (time < 200) result = '⚡ 闪电反应！';
+    else if (time < 300) result = '🔥 非常快！';
+    else if (time < 500) result = '👍 不错！';
+    else result = '😴 再快点！';
+
+    reactionBtn.textContent = `${result} (${time}ms)`;
+    reactionBtn.classList.remove('ready');
+    reactionBtn.classList.add('done');
+    reactionState = 'idle';
+
+    setTimeout(() => {
+      reactionBtn.textContent = '点击开始';
+      reactionBtn.classList.remove('done');
+    }, 2000);
+  }
+
+  // ========== 视力测试 ==========
+  let visionLevel = 1;
+  let visionScore = 0;
+  let visionLocked = false;
+
+  function getVisionConfig(level) {
+    const gridSize = Math.min(9, 3 + Math.floor((level - 1) / 2));
+    const diff = Math.max(5, 20 - Math.floor(level * 1.5));
+    return { gridSize, diff };
+  }
+
+  function updateVisionStatus(text) {
+    visionStatus.textContent = text;
+  }
+
+  function createVisionRound() {
+    const { gridSize, diff } = getVisionConfig(visionLevel);
+    const total = gridSize * gridSize;
+    const targetIndex = Math.floor(Math.random() * total);
+
+    const hue = Math.floor(Math.random() * 360);
+    const sat = 65 + Math.floor(Math.random() * 20);
+    const baseLight = 45 + Math.floor(Math.random() * 20);
+    const specialLight = Math.max(18, Math.min(82, baseLight + (Math.random() > 0.5 ? diff : -diff)));
+
+    visionGrid.innerHTML = '';
+    visionGrid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+
+    for (let i = 0; i < total; i++) {
+      const isTarget = i === targetIndex;
+      const cell = document.createElement('button');
+      cell.type = 'button';
+      cell.className = `vision-cell${isTarget ? ' target' : ''}`;
+      cell.style.backgroundColor = isTarget
+        ? `hsl(${hue} ${sat}% ${specialLight}%)`
+        : `hsl(${hue} ${sat}% ${baseLight}%)`;
+
+      cell.addEventListener('click', () => {
+        if (visionLocked) {
+          return;
+        }
+
+        if (isTarget) {
+          visionLocked = true;
+          visionScore += 1;
+          visionLevel += 1;
+          cell.classList.add('found');
+          updateVisionStatus(`答对了！当前分数 ${visionScore}，进入第${visionLevel}关...`);
+          setTimeout(() => {
+            visionLocked = false;
+            createVisionRound();
+          }, 360);
+        } else {
+          cell.classList.add('wrong');
+          updateVisionStatus(`没找对，再试试。第${visionLevel}关 | ${gridSize}x${gridSize}`);
+          setTimeout(() => {
+            cell.classList.remove('wrong');
+          }, 260);
+        }
+      });
+
+      visionGrid.appendChild(cell);
+    }
+
+    updateVisionStatus(`第${visionLevel}关 | ${gridSize}x${gridSize} | 分数 ${visionScore}`);
+  }
+
+  visionResetBtn.addEventListener('click', () => {
+    visionLevel = 1;
+    visionScore = 0;
+    visionLocked = false;
+    createVisionRound();
+  });
+
+  createVisionRound();
+
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMiniGames, { once: true });
+  } else {
+    initMiniGames();
+  }
+</script>
+
