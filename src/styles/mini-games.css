@@ -8,26 +8,31 @@
   text-align: center;
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: #B8C7FB;
+  color: #667eea;
 }
 
 .game-card {
-  background: #1A1B1F;
-  border: 1px solid #222327;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(102, 126, 234, 0.2);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
 }
 
+.game-card:hover {
+  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+}
+
 .game-card h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  color: #C1C3C7;
+  color: #1a202c;
 }
 
 .game-desc {
-  color: #888888;
+  color: rgba(0, 0, 0, 0.6);
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
@@ -43,29 +48,29 @@
   flex: 1;
   min-width: 150px;
   padding: 0.7rem;
-  background: #13161C;
-  color: #C1C3C7;
-  border: 1px solid #222327;
+  background: #fff;
+  color: #1a202c;
+  border: 1px solid rgba(102, 126, 234, 0.3);
   border-radius: 6px;
   font-size: 1rem;
   outline: none;
 }
 
 .game-content input:focus {
-  border-color: #4f4f4f;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .game-content input::placeholder {
-  color: #666;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .game-content button,
 .reset-btn {
   padding: 0.7rem 1.5rem;
-  background: #28292E;
-  color: #C1C3C7;
-  border: 1px solid #222327;
+  background: rgba(102, 126, 234, 0.2);
+  color: #667eea;
+  border: 1px solid rgba(102, 126, 234, 0.5);
   border-radius: 6px;
   font-size: 1rem;
   font-weight: 600;
@@ -75,9 +80,9 @@
 
 .game-content button:hover,
 .reset-btn:hover {
-  background: #3a3b40;
+  background: rgba(102, 126, 234, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(193, 195, 199, 0.2);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
 }
 
 .game-content button:active,
@@ -86,7 +91,9 @@
 }
 
 .game-content button:disabled {
-  background: #666;
+  background: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 0, 0, 0.2);
   cursor: not-allowed;
   opacity: 0.6;
 }
@@ -94,9 +101,9 @@
 .result-msg {
   width: 100%;
   padding: 0.8rem 1rem;
-  background: #13161C;
-  color: #B8C7FB;
-  border: 1px solid #222327;
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  border: 1px solid rgba(102, 126, 234, 0.3);
   border-radius: 6px;
   text-align: center;
   font-weight: 500;
@@ -106,7 +113,7 @@
 .attempts {
   width: 100%;
   text-align: center;
-  color: #888888;
+  color: rgba(0, 0, 0, 0.5);
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }
@@ -121,8 +128,8 @@
 
 .memory-card {
   aspect-ratio: 1;
-  background: linear-gradient(135deg, #28292E 0%, #1A1B1F 100%);
-  border: 2px solid #222327;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, #f0f4f8 100%);
+  border: 2px solid rgba(102, 126, 234, 0.3);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -135,22 +142,24 @@
 
 .memory-card:hover:not(.matched) {
   transform: scale(1.05);
-  background: #3a3b40;
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.5);
 }
 
 .memory-card.flipped,
 .memory-card.matched {
-  background: #13161C;
-  border-color: #4f4f4f;
+  background: #fff;
+  border-color: #667eea;
   transform: rotateY(180deg);
 }
 
 .game-stats {
   padding: 1rem;
-  background: #13161C;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
   border-radius: 6px;
   text-align: center;
-  color: #888888;
+  color: rgba(0, 0, 0, 0.6);
   font-weight: 500;
 }
 
@@ -171,13 +180,13 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.1s ease;
-  background: #28292E;
-  color: #C1C3C7;
-  border: 2px solid #222327;
+  background: rgba(102, 126, 234, 0.2);
+  color: #667eea;
+  border: 2px solid rgba(102, 126, 234, 0.5);
 }
 
 .reaction-btn:hover {
-  background: #3a3b40;
+  background: rgba(102, 126, 234, 0.3);
 }
 
 .reaction-btn.waiting {
@@ -197,7 +206,7 @@
 }
 
 .reaction-btn.done {
-  background: #13161C;
+  background: #fff;
   color: #76FF03;
   border-color: #76FF03;
 }
@@ -211,7 +220,7 @@
 
 .vision-cell {
   aspect-ratio: 1;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(102, 126, 234, 0.3);
   border-radius: 8px;
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
@@ -219,7 +228,7 @@
 
 .vision-cell:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.18) inset;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.4) inset;
 }
 
 .vision-cell.found {
@@ -255,100 +264,6 @@
   50% {
     box-shadow: 0 0 0 15px rgba(118, 255, 3, 0);
   }
-}
-
-/* 字体变色（随机亮色） */
-html.dark .mini-games-container h2 {
-  color: #000000;
-}
-
-html.dark .game-card {
-  background: #f5f5f5;
-  border-color: #e0e0e0;
-}
-
-html.dark .game-card h3 {
-  color: #000000;
-}
-
-html.dark .game-desc {
-  color: #757575;
-}
-
-html.dark .game-content input {
-  background: #ffffff;
-  color: #000000;
-  border-color: #e0e0e0;
-}
-
-html.dark .game-content input:focus {
-  border-color: #999;
-  box-shadow: 0 0 0 3px rgba(26, 27, 31, 0.1);
-}
-
-html.dark .game-content input::placeholder {
-  color: #ccc;
-}
-
-html.dark .game-content button,
-html.dark .reset-btn {
-  background: #e8e8e8;
-  color: #000000;
-  border-color: #d0d0d0;
-}
-
-html.dark .game-content button:hover,
-html.dark .reset-btn:hover {
-  background: #d0d0d0;
-}
-
-html.dark .result-msg {
-  background: #ffffff;
-  color: #1A1B1F;
-  border-color: #e0e0e0;
-}
-
-html.dark .attempts {
-  color: #757575;
-}
-
-html.dark .memory-card {
-  background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
-  border-color: #d0d0d0;
-}
-
-html.dark .memory-card:hover:not(.matched) {
-  background: #d0d0d0;
-}
-
-html.dark .memory-card.flipped,
-html.dark .memory-card.matched {
-  background: #ffffff;
-  border-color: #999;
-}
-
-html.dark .game-stats {
-  background: #ffffff;
-  color: #757575;
-  border-color: #e0e0e0;
-}
-
-html.dark .reaction-btn {
-  background: #e8e8e8;
-  color: #000000;
-  border-color: #d0d0d0;
-}
-
-html.dark .reaction-btn:hover {
-  background: #d0d0d0;
-}
-
-html.dark .vision-cell {
-  border-color: rgba(0, 0, 0, 0.12);
-}
-
-html.dark .vision-cell:hover {
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12) inset;
 }
 
 /* 响应式设计 */

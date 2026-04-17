@@ -2,66 +2,254 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Greeting from '../components/Greeting';
 import MiniGames from '../components/MiniGames.astro';
+import CatFishing from '../components/CatFishing.astro';
 import HeadImage from '../../public/images/headimage.jpg'
 import { Picture } from 'astro:assets';
 const pageTitle = "森森的主页";
 ---
-<BaseLayout pageTitle = {pageTitle}>
-  <div class="img-info-container">
-    <div class="img-wrapper">
-      <Picture src={HeadImage} alt = '' width="200" height="200" />
+
+<BaseLayout pageTitle={pageTitle}>
+  <div class="home-container">
+    <!-- 页面头部 -->
+    <div class="page-header">
+      <h1 class="page-title">
+        <span class="title-gradient">欢迎来到我的博客</span>
+      </h1>
+      <p class="page-subtitle">探索技术，记录成长，分享思考</p>
     </div>
 
-    <div class="info-wrapper">
-      <h2>森森</h2>
-      <p>a XJTUer</p>
-      <p>爱说话 爱代码 爱世界</p>
-      <p>我是燕赵儿女，要为河北争气！</p>
-      <button
-        onclick = "window.location.href = '/about'">
-        这人好有意思...
-      </button>
+    <!-- 个人信息卡片 -->
+    <div class="profile-card">
+      <div class="profile-glow"></div>
+      <div class="profile-image">
+        <Picture src={HeadImage} alt='头像' width="200" height="200" />
+      </div>
+
+      <div class="profile-content">
+        <h2 class="profile-name">森森</h2>
+        <div class="profile-badges">
+          <span class="badge">XJTUer</span>
+          <span class="badge">ENTJ</span>
+        </div>
+        <p class="profile-intro">爱说话 爱代码 爱世界</p>
+        <p class="profile-quote">我是燕赵儿女，要为河北争气！</p>
+        <button class="profile-btn" onclick="window.location.href = '/about'">
+          这人好有意思... →
+        </button>
+      </div>
     </div>
+
+    <Greeting client:load messages={["祝福西安交大130岁生日快乐！", "热烈庆祝西交大西迁70周年！", "百卅辉光，七秩日新！", "精勤求学，敦笃励志，果毅力行，忠恕任事‌。"]} />
+
+    <MiniGames />
+    <CatFishing />
   </div>
-
-  <Greeting client:load messages={["祝福西安交大130岁生日快乐！", "热烈庆祝西交大西迁70周年！", "百卅辉光，七秩日新！", "精勤求学，敦笃励志，果毅力行，忠恕任事‌。"]} />
-
-  <MiniGames />
-
-  <style>
-    .img-info-container {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 20px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .img-wrapper img {
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .info-wrapper {
-      flex: 1;
-    }
-    .info-wrapper h2 {
-      margin: 0 0 10px 0;
-      color: #B8C7FB;
-    }
-    .info-wrapper p {
-      margin: 5px 0;
-      color: #666;
-    }
-    .info-wrapper button {
-      margin-top: 10px;
-      padding: 8px 16px;
-      background: #1A1B1F;
-      color: white;
-      border: 1px solid #4f4f4f;;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
 </BaseLayout>
+
+<style>
+  .home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* 页面头部 */
+  .page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  .page-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+  }
+
+  .title-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-subtitle {
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
+  /* 个人信息卡片 */
+  .profile-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease 0.3s forwards;
+  }
+
+  .profile-card:hover {
+    border-color: rgba(102, 126, 234, 0.5);
+    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+  }
+
+  .profile-glow {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+    border-radius: 22px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+    filter: blur(8px);
+  }
+
+  .profile-card:hover .profile-glow {
+    opacity: 0.3;
+  }
+
+  .profile-image {
+    flex-shrink: 0;
+  }
+
+  .profile-image img {
+    border-radius: 12px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .profile-card:hover .profile-image img {
+    transform: scale(1.05);
+  }
+
+  .profile-content {
+    flex: 1;
+  }
+
+  .profile-name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0 0 1rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .profile-badges {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    background: rgba(102, 126, 234, 0.2);
+    border: 1px solid rgba(102, 126, 234, 0.5);
+    border-radius: 12px;
+    color: #667eea;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .badge:hover {
+    background: rgba(102, 126, 234, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .profile-intro {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.8);
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
+
+  .profile-quote {
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 1rem 0;
+    font-style: italic;
+  }
+
+  .profile-btn {
+    padding: 0.75rem 1.5rem;
+    background: rgba(102, 126, 234, 0.2);
+    border: 1px solid rgba(102, 126, 234, 0.5);
+    border-radius: 12px;
+    color: #667eea;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .profile-btn:hover {
+    background: rgba(102, 126, 234, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+  }
+
+  /* 动画 */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 2.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1rem;
+    }
+
+    .profile-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .profile-image img {
+      width: 150px;
+      height: 150px;
+    }
+
+    .profile-name {
+      font-size: 1.5rem;
+    }
+
+    .profile-badges {
+      justify-content: center;
+    }
+  }
+</style>

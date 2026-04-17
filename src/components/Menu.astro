@@ -1,6 +1,93 @@
----
----
-
-<button aria-expanded="false" aria-controls="main-menu" class="menu">
-    菜单
+<button class="mobile-menu-btn" aria-label="打开菜单" aria-expanded="false">
+    <span class="hamburger-icon">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </span>
+    <span class="close-icon">
+        <span class="close-line"></span>
+        <span class="close-line"></span>
+    </span>
 </button>
+
+<style>
+.mobile-menu-btn {
+    display: none;
+    width: 44px;
+    height: 44px;
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-menu-btn:hover {
+    background: rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: scale(1.05);
+}
+
+.hamburger-icon, .close-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    width: 20px;
+    height: 20px;
+}
+
+.hamburger-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #667eea;
+    margin: 4px 0;
+    transition: all 0.3s ease;
+}
+
+.close-icon {
+    opacity: 0;
+}
+
+.close-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #667eea;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform-origin: center center;
+    transition: all 0.3s ease;
+}
+
+.close-line:first-child {
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.close-line:last-child {
+    transform: translateY(-50%) rotate(-45deg);
+}
+
+.mobile-menu-btn[aria-expanded="true"] .hamburger-icon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.mobile-menu-btn[aria-expanded="true"] .close-icon {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+}
+</style>

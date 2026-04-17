@@ -1,22 +1,125 @@
 ---
 import Navigation from "./Navigation.astro";
 import Menu from "./Menu.astro";
-import ThemeIcon from "./ThemeIcon.astro";
 ---
 
-<header>
-    <nav>
-        <div>
-        <ThemeIcon />
-        <Menu />
+<header class="modern-header">
+    <nav class="modern-nav">
+        <div class="nav-left">
+            <a href="/" class="logo-link">
+                <span class="logo-text">森森的博客</span>
+                <span class="logo-dot">.</span>
+            </a>
         </div>
-        <Navigation />
+
+        <div class="nav-center">
+            <Navigation />
+        </div>
+
+        <div class="nav-right">
+            <Menu />
+        </div>
     </nav>
 </header>
 
 <style>
-  div {
+  .modern-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .modern-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+      rgba(102, 126, 234, 0.05) 0%,
+      rgba(118, 75, 162, 0.05) 100%);
+    pointer-events: none;
+  }
+
+  .modern-nav {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    padding: 1rem 2rem;
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .nav-left, .nav-right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a202c;
+    transition: all 0.3s ease;
+  }
+
+  .logo-link:hover {
+    transform: scale(1.05);
+  }
+
+  .logo-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-dot {
+    color: #f093fb;
+    font-size: 2rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+  }
+
+  @media (max-width: 768px) {
+    .modern-nav {
+      padding: 1rem 1rem;
+    }
+
+    .nav-center {
+      display: flex;
+      width: 0;
+      flex: 0;
+      overflow: visible;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+    }
+
+    .logo-dot {
+      font-size: 1.5rem;
+    }
   }
 </style>

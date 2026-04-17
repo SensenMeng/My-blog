@@ -13,67 +13,88 @@ const identity = {
 };
 const skills = ["C++","python","html"];
 
-const skillColor = "crimson";
+const skillColor = "#667eea";
 const fontWeight = "bold";
 const textCase = "capitalize";
 ---
-<BaseLayout pageTitle = {pageTitle}>
+
+<BaseLayout pageTitle={pageTitle}>
     <style define:vars={{skillColor,fontWeight,textCase}}>
-        h1 {
-            color : rosybrown;
-            font-size : 3rem;
+        h2 {
+            color: #1a202c;
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
         }
+
+        p, li {
+            color: rgba(0, 0, 0, 0.7);
+            line-height: 1.6;
+        }
+
+        ul {
+            list-style: disc;
+            margin-left: 2rem;
+            color: rgba(0, 0, 0, 0.7);
+        }
+
         .skill {
             color: var(--skillColor);
             font-weight: var(--fontWeight);
             text-transform: var(--textCase);
+            padding: 0.25rem 0.5rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 4px;
         }
     </style>
 
-    <h2>... 和森森的博客网站!</h2>
+    <h1>关于森森...</h1>
+    <h2>和森森的博客网站!</h2>
 
-        <p>我的一些信息:</p>
-        <ul>
-            <li>我是{identity.firstname}。</li>
-            <li>我来自{identity.location.country}{identity.location.province}。</li>
-            <li>我是一名{identity.occupation}，就读于{identity.university}。</li>
-            {identity.hobbies.length >=2 &&
-                <li>我的俩爱好：{identity.hobbies[0]}和{identity.hobbies[1]}</li>
-            }
-        </ul>
+    <p>我的一些信息:</p>
+    <ul>
+        <li>我是{identity.firstname}。</li>
+        <li>我来自{identity.location.country}{identity.location.province}。</li>
+        <li>我是一名{identity.occupation}，就读于{identity.university}。</li>
+        {identity.hobbies.length >=2 &&
+            <li>我的俩爱好：{identity.hobbies[0]}和{identity.hobbies[1]}</li>
+        }
+    </ul>
 
     <h2>我的技能？</h2>
-        
-        <p>就凭你还想知道我的技能？</p>
-        <p>行吧满足你！</p>
-        <ul>
-            {skills.map((skill)=><li class="skill">{skill}</li>)}
-        </ul>
+
+    <p>就凭你还想知道我的技能？</p>
+    <p>行吧满足你！</p>
+    <ul>
+        {skills.map((skill)=> <li class="skill">{skill}</li>)}
+    </ul>
+
     <h2>使用的工具？</h2>
-        <ul>
-            <li>网页搭建：Astro</li>
-            <li>博客撰写：Markdown Latex(转换工具MathJax)</li>
-            <li>评论区嵌入：giscus</li>
-            <li>网页托管：netlify</li>
-            <li>AI api调用：百川Embedding、DeepSeek</li>
-            <li>本地Embedding模型：bge-large-zh-v1.5</li>
-        </ul>
+    <ul>
+        <li>网页搭建：Astro</li>
+        <li>博客撰写：Markdown Latex(转换工具MathJax)</li>
+        <li>评论区嵌入：giscus</li>
+        <li>网页托管：netlify</li>
+        <li>AI api调用：百川Embedding、DeepSeek</li>
+        <li>本地Embedding模型：bge-large-zh-v1.5</li>
+    </ul>
+
     <h2 id="8r-rule">什么是 8R 规则？</h2>
-        <p>8R 规则是一套基于谐音的整活规则，由本人总结并发扬光大。</p>
-        <p>核心很简单：
-        <br>凡出现 <strong>8、爸、巴、父、夫、爷、也、耶</strong> 等高辈分谐音 → 我必喊：<strong>诶！</strong>
-        </p>
-        <p>但有<strong>豁免机制</strong>：
-        <br>只要<strong>最后一个字</strong>是 <strong>儿、二、孙、尔、r、R、er</strong> 等低辈分谐音，就不触发。
-        </p>
-        <p>说白了：
-        <br><strong>说高辈分不带儿 → 必诶；带儿带孙带R → 不诶。</strong>
-        </p>
-        <p>这套规则已嵌入本站 AI 问答后端，词库 & 匹配逻辑全自研。</p>
-        <p><strong>It's a historic moment.</strong></p>
+    <p>8R 规则是一套基于谐音的整活规则，由本人总结并发扬光大。</p>
+    <p>核心很简单：
+    <br>凡出现 <strong style="color: #667eea;">8、爸、巴、父、夫、爷、也、耶</strong> 等高辈分谐音 → 我必喊：<strong style="color: #764ba2;">诶！</strong>
+    </p>
+    <p>但有<strong style="color: rgba(0, 0, 0, 0.8);">豁免机制</strong>：
+    <br>只要<strong>最后一个字</strong>是 <strong style="color: #667eea;">儿、二、孙、尔、r、R、er</strong> 等低辈分谐音，就不触发。
+    </p>
+    <p>说白了：
+    <br><strong style="color: rgba(0, 0, 0, 0.9);">说高辈分不带儿 → 必诶；带儿带孙带R → 不诶。</strong>
+    </p>
+    <p>这套规则已嵌入本站 AI 问答后端，词库 & 匹配逻辑全自研。</p>
+    <p><strong style="color: #667eea;">It's a historic moment.</strong></p>
 
     <h2>最后想给大家说的</h2>
-    <p>这是一个非常<span style="color: red; font-weight: bold;">无知且愚蠢</span>的人，如果你发现我的博客有错别字，或者对我的网页有很好的建议，欢迎联系。(不许建议我删去8r规则，这是我的心血)</p>
-    <p>孟某在此不胜感激！</p>
+    <p>这是一个非常<span style="color: #FF5252; font-weight: bold;">无知且愚蠢</span>的人，如果你发现我的博客有错别字，或者对我的网页有很好的建议，欢迎联系。(不许建议我删去8r规则，这是我的心血)</p>
+    <p style="color: #667eea; font-weight: 600;">孟某在此不胜感激！</p>
     <Comments title="关于森森"/>
 </BaseLayout>

@@ -1,39 +1,27 @@
-/* 容器样式：匹配Prince的MD渲染容器 */
-.dark .markdown-prince {
-  /* 字体：Prince默认使用系统无衬线字体 */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
-  line-height: 1.6; /* 行高和Prince一致 */
-  color: #24292e; /* 正文颜色 */
-  max-width: 1800px; /* 容器宽度匹配VSCode编辑区 */
-  margin: 0 auto;
-  padding: 0rem;
-  font-size: 16px;
-}
+/* MarkdownPost-Prince.css - 统一亮色模式版本 */
 
+/* 容器样式：统一亮色 */
 .markdown-prince {
-  /* 字体：Prince默认使用系统无衬线字体 */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
-  line-height: 1.6; /* 行高和Prince一致 */
-  color: #C1C3C7; /* 正文颜色 */
-  /* max-width: 1800px; 容器宽度匹配VSCode编辑区 */
+  line-height: 1.6;
+  color: #24292e;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 0rem;
   font-size: 16px;
-  max-width: 100vw;
   width: 100%;
-  /* margin: 0 auto; */
-  /* padding: 0 15px; */
   box-sizing: border-box;
   overflow-x: hidden;
 }
 
-/* 标题层级：严格匹配Prince的字号/间距/边框 */
+/* 标题层级 */
 .markdown-prince h1 {
   font-size: 2em;
   font-weight: 700;
   margin: 1.5rem 0 1rem;
   border-bottom: 1px solid #eaecef;
   padding-bottom: 0.3em;
+  color: #1a202c;
 }
 
 .markdown-prince h2 {
@@ -42,17 +30,20 @@
   margin: 1.25rem 0 0.8rem;
   border-bottom: 1px solid #eaecef;
   padding-bottom: 0.3em;
+  color: #24292e;
 }
 
 .markdown-prince h3 {
   font-size: 1.25em;
   font-weight: 600;
   margin: 1rem 0 0.6rem;
+  color: #24292e;
 }
 
 /* 段落/列表/引用样式 */
 .markdown-prince p {
   margin: 0 0 1rem;
+  color: #24292e;
 }
 
 .markdown-prince ul {
@@ -67,25 +58,18 @@
   padding-left: 0.5rem;
 }
 
-.dark .markdown-prince blockquote {
-  margin: 0 0 1rem;
-  padding: 0 1rem;
-  border-left: 4px solid #dfe2e5;
-  color: #6a737d;
-  background: #f6f8fa;
-}
-
 .markdown-prince blockquote {
   margin: 0 0 1rem;
   padding: 0 1rem;
-  border-left: 4px solid #dfe2e5;
-  color: #6a737d;
-  background: #1D1D21;
+  border-left: 4px solid rgba(102, 126, 234, 0.5);
+  color: rgba(0, 0, 0, 0.6);
+  background: rgba(102, 126, 234, 0.05);
 }
 
-/* 代码块：核心匹配Prince的样式 */
+/* 代码块：亮色模式 */
 .markdown-prince pre {
   background: #f6f8fa;
+  border: 1px solid rgba(102, 126, 234, 0.2);
   border-radius: 6px;
   padding: 1rem;
   margin: 0 0 1rem;
@@ -98,29 +82,30 @@
   font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 0.9em;
   padding: 0.2em 0.4em;
-  background: rgba(27, 31, 35, 0.05);
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
   border-radius: 3px;
 }
 
 /* 链接样式 */
 .markdown-prince a {
-  color: #0366d6;
+  color: #667eea;
   text-decoration: none;
-  border-bottom: 1px solid #dfe2e5;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
 }
 
 .markdown-prince a:hover {
-  color: #005cc5;
-  border-bottom: 1px solid #005cc5;
+  color: #764ba2;
+  border-bottom: 1px solid rgba(118, 75, 162, 0.5);
 }
 
 /* 分隔符 */
 .markdown-prince hr {
-  border-top: 3px solid #d0d7de; /* 加粗+换颜色 */
+  border-top: 3px solid rgba(102, 126, 234, 0.3);
 }
 
-/* ========== 反向逻辑：无类名（实际是dark模式）→ 表格显示light样式 ========== */
-/* （别人看会以为是light表格，实际是dark模式生效） */
+/* 表格样式：统一亮色 */
 .markdown-prince table {
   width: 100%;
   max-width: 100%;
@@ -128,61 +113,30 @@
   border-collapse: collapse;
   border-spacing: 0;
   font-size: 0.95em;
-  /* 本该是light的边框色，现在给dark模式用 */
-  border-color: #eaecef;
+  border-color: rgba(102, 126, 234, 0.2);
 }
 
 .markdown-prince th {
   padding: 0.75rem 1rem;
   text-align: left;
   font-weight: 600;
-  /* 本该是light的表头背景，现在给dark模式用 */
-  background-color: #f6f8fa;
-  border: 1px solid #eaecef;
-  /* 本该是light的表头文字色，现在给dark模式用 */
-  color: #24292e;
+  background-color: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  color: #1a202c;
 }
 
 .markdown-prince td {
   padding: 0.75rem 1rem;
-  border: 1px solid #eaecef;
-  /* 本该是light的单元格文字色，现在给dark模式用 */
-  color: #C1C3C7;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  color: #24292e;
 }
 
 .markdown-prince tr:hover td {
-  /* 本该是light的hover背景，现在给dark模式用 */
-  background-color: #f9fafb;
-  color: #24292e;
+  background-color: rgba(102, 126, 234, 0.08);
+  color: #1a202c;
 }
 
-/* ========== 反向逻辑：html.dark（实际是light模式）→ 表格显示dark样式 ========== */
-/* （别人看会以为是dark表格，实际是light模式生效） */
-html.dark .markdown-prince table {
-  border-color: #333338; /* 本该是dark的边框色，现在给light模式用 */
-}
-
-html.dark .markdown-prince th {
-  /* 本该是dark的表头背景，现在给light模式用 */
-  background-color: #1D1D21;
-  border-color: #333338;
-  /* 本该是dark的表头文字色，现在给light模式用 */
-  color: #e6e6e6;
-}
-
-html.dark .markdown-prince td {
-  border-color: #333338;
-  /* 本该是dark的单元格文字色，现在给light模式用 */
-  color: #24292e;
-}
-
-html.dark .markdown-prince tr:hover td {
-  /* 本该是dark的hover背景，现在给light模式用 */
-  background-color: #252529;
-  color: #C1C3C7;
-}
-
-/* ========== 表格对齐========== */
+/* 表格对齐 */
 .markdown-prince th[align="center"],
 .markdown-prince td[align="center"] {
   text-align: center;
@@ -196,24 +150,38 @@ html.dark .markdown-prince tr:hover td {
 /* 针对MathJax渲染的公式容器 */
 .math-container {
   width: 100%;
-  overflow-x: auto; /* 横向溢出时显示滚动条（移动端可拖动） */
+  overflow-x: auto;
   overflow-y: hidden;
-  white-space: nowrap; /* 禁止公式换行，保证单行横向滚动 */
-  -webkit-overflow-scrolling: touch; /* 优化移动端滚动体验 */
-  padding: 0.5rem 0; /* 增加上下内边距，避免滚动条遮挡 */
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.5rem 0;
 }
 
-/* 禁用MathJax公式的自动缩放（关键） */
+/* 禁用MathJax公式的自动缩放 */
 .mjx-chtml {
-  font-size: inherit !important; /* 继承父元素字体大小，不单独缩放 */
+  font-size: inherit !important;
   white-space: nowrap !important;
 }
 
-/* 媒体查询：仅在移动端生效（屏幕宽度≤768px） */
+/* 媒体查询：仅在移动端生效 */
 @media (max-width: 768px) {
+  .markdown-prince {
+    max-width: 100vw;
+    padding: 0 1rem;
+  }
+
   .math-container {
-    max-width: 100vw; /* 限制最大宽度为屏幕宽度 */
-    margin: 0 -1rem; /* 抵消页面内边距，充分利用宽度 */
+    max-width: 100vw;
+    margin: 0 -1rem;
     padding: 0.5rem 1rem;
+  }
+
+  .markdown-prince pre {
+    padding: 0.8rem;
+    font-size: 0.85em;
+  }
+
+  .markdown-prince table {
+    font-size: 0.9em;
   }
 }

@@ -1,12 +1,223 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BlogPost from '../components/BlogPost.astro';
+import BlogCard from '../components/BlogCard.astro';
+
+// 获取所有博客文章
 const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }));
-const pageTitle = "森森的博客~";
+
+// 按日期排序
+const sortedPosts = allPosts.sort((a: any, b: any) => {
+  const dateA = new Date(a.frontmatter.pubDate);
+  const dateB = new Date(b.frontmatter.pubDate);
+  return dateB.getTime() - dateA.getTime();
+});
+
+const pageTitle = "森森的博客";
 ---
-<BaseLayout pageTitle = {pageTitle}>
-  <p>想到啥就写啥，想写什么就写什么~</p>
-  <ul>
-    {allPosts.map((post: any) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
-  </ul>
+
+<BaseLayout pageTitle={pageTitle}>
+  <div class="blog-container">
+    <!-- 页面头部 -->
+    <div class="page-header">
+      <h1 class="page-title">
+        <span class="title-gradient">博客文章</span>
+      </h1>
+      <p class="page-subtitle">探索技术，记录成长，分享思考</p>
+      <div class="title-underline"></div>
+    </div>
+
+    <!-- 文章网格 -->
+    <div class="posts-grid" id="postsGrid">
+      {sortedPosts.map((post: any) => (
+        <BlogCard
+          title={post.frontmatter.title}
+          description={post.frontmatter.description}
+          pubDate={post.frontmatter.pubDate}
+          image={post.frontmatter.image}
+          tags={post.frontmatter.tags}
+          url={post.url}
+        />
+      ))}
+    </div>
+
+    <!-- 空状态提示 -->
+    {sortedPosts.length === 0 && (
+      <div class="empty-state">
+        <div class="empty-icon">📝</div>
+        <p>暂无文章，敬请期待...</p>
+      </div>
+    )}
+  </div>
 </BaseLayout>
+
+<style>
+  .blog-container {
+    position: relative;
+    min-height: 80vh;
+    padding: 2rem 0;
+    overflow: hidden;
+  }
+
+  /* 页面头部 */
+  .page-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  .page-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+  }
+
+  .title-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    display: inline-block;
+  }
+
+  .title-gradient::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    border-radius: 2px;
+    animation: expandUnderline 1s ease 0.5s forwards;
+  }
+
+  @keyframes expandUnderline {
+    to { width: 60%; }
+  }
+
+  .page-subtitle {
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 1.5rem 0 0 0;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
+  .title-underline {
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #667eea, transparent);
+    margin: 2rem auto 0;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.3s forwards;
+  }
+
+  /* 文章网格 */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+    }
+
+    .page-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .posts-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* 空状态 */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  /* 动画 */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+
+<script>
+  // 滚动进入动画
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        const delay = index * 100;
+        setTimeout(() => {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // 为所有博客卡片添加初始样式和观察器
+  document.querySelectorAll('.blog-card').forEach((card, index) => {
+    const element = card as HTMLElement;
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(50px)';
+    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(card);
+  });
+
+  // 页面加载时的入场动画
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.blog-card').forEach((card, index) => {
+      setTimeout(() => {
+        const element = card as HTMLElement;
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(50px)';
+      }, 0);
+    });
+  });
+</script>

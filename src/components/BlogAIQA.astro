@@ -1,5 +1,5 @@
 ---
-// BlogAIQA.astro - 最终版：默认=暗色，html.dark=亮色，切换实时生效
+// BlogAIQA.astro - 统一亮色模式版本
 interface Props {
   placeholder?: string;
 }
@@ -32,6 +32,7 @@ const { placeholder = '请输入关于博客的问题...' } = Astro.props;
   font-family: sans-serif;
   transition: all 0.3s ease;
 }
+
 .qa-title {
   font-size: 1.3rem;
   margin-bottom: 1.5rem;
@@ -41,17 +42,20 @@ const { placeholder = '请输入关于博客的问题...' } = Astro.props;
   font-weight: 600;
   letter-spacing: 0.5px;
 }
+
 .qa-title::after {
   content: '';
   flex: 1;
   height: 1px;
   opacity: 0.7;
-  background: linear-gradient(90deg, #1A1B1F, transparent);
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.5), transparent);
 }
+
 .qa-container { display: flex; flex-direction: column; gap: 1.2rem; }
+
 .qa-input {
   padding: 1rem 1.2rem;
-  border: 1px solid;
+  border: 1px solid rgba(102, 126, 234, 0.3);
   border-radius: 10px;
   font-size: 1rem;
   resize: vertical;
@@ -61,7 +65,17 @@ const { placeholder = '请输入关于博客的问题...' } = Astro.props;
   line-height: 1.5;
   outline: none;
   transition: all 0.3s ease;
+  background: #fff;
+  color: #1a202c;
 }
+
+.qa-input::placeholder { color: rgba(0, 0, 0, 0.4); }
+
+.qa-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
 .qa-btn {
   padding: 0.8rem 1.5rem;
   border: none;
@@ -71,24 +85,31 @@ const { placeholder = '请输入关于博客的问题...' } = Astro.props;
   cursor: pointer;
   transition: all 0.3s ease;
   letter-spacing: 0.5px;
-  background: #1A1B1F;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background: rgba(102, 126, 234, 0.2);
+  color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
 }
+
 .qa-btn:hover {
-  background: #28292E;
+  background: rgba(102, 126, 234, 0.3);
   transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(102, 126, 234, 0.2);
 }
+
 .qa-btn:active {
   transform: translateY(0);
-  background: #1A1B1F;
+  background: rgba(102, 126, 234, 0.25);
 }
+
 .qa-btn:disabled {
-  background: #757575;
+  background: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.4);
   transform: none;
   box-shadow: none;
   cursor: not-allowed;
   opacity: 0.7;
 }
+
 .qa-loading {
   display: flex;
   align-items: center;
@@ -97,23 +118,28 @@ const { placeholder = '请输入关于博客的问题...' } = Astro.props;
   padding: 1.5rem;
   font-size: 1rem;
   line-height: 1.5;
+  color: rgba(0, 0, 0, 0.6);
 }
+
 .loading-dot::before {
   content: '...';
   font-size: 1.2rem;
   letter-spacing: 2px;
   animation: dot-flash 1.5s infinite linear;
 }
+
 @keyframes dot-flash {
   0%, 100% { opacity: 0.2; }
   25% { opacity: 1; }
   50% { opacity: 0.2; }
   75% { opacity: 1; }
 }
+
 .loading-text { font-style: italic; }
+
 .qa-answer {
   padding: 1.5rem 1.2rem;
-  border: 1px solid;
+  border: 1px solid rgba(102, 126, 234, 0.3);
   border-radius: 10px;
   min-height: 100px;
   white-space: pre-wrap;
@@ -121,77 +147,26 @@ const { placeholder = '请输入关于博客的问题...' } = Astro.props;
   font-size: 1rem;
   font-family: sans-serif;
   transition: all 0.3s ease;
+  background: rgba(102, 126, 234, 0.05);
+  color: #1a202c;
 }
+
 .qa-answer > div:has(> ❌), .qa-answer > span:contains('❌') {
   color: #F44336 !important;
   text-align: center;
   padding: 1rem 0;
 }
 
-/* 👇👇👇 核心1：默认状态（无html.dark）= 暗色模式（你的基础样式）【优先级基础】 */
+/* 主容器样式 */
 .blog-ai-qa {
-  background: #13161C !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-  border: 1px solid #222327 !important;
-}
-.qa-title { color: #C1C3C7 !important; }
-.qa-input {
-  background: #1A1B1F !important;
-  color: #C1C3C7 !important;
-  border-color: #222327 !important;
-}
-.qa-input::placeholder { color: #888888 !important; }
-.qa-input:focus {
-  border-color: #1A1B1F !important;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1) !important;
-}
-.qa-btn {
-  color: #C1C3C7 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-}
-.qa-btn:hover { box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2) !important; }
-.qa-btn:active { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important; }
-.qa-btn:disabled { background: #9E9E9E !important; }
-.qa-loading { color: #9E9E9E !important; }
-.qa-answer {
-  background: #1A1B1F !important;
-  color: #C1C3C7 !important;
-  border-color: #222327 !important;
-  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+  border: 1px solid rgba(102, 126, 234, 0.2);
 }
 
-/* 👇👇👇 核心2：html.dark = 亮色模式（你的反转样式）【优先级更高】 */
-html.dark .blog-ai-qa {
-  background: #ffffff !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
-  border: 1px solid #E0E0E0 !important;
-}
-html.dark .qa-title { color: #000000 !important; }
-html.dark .qa-input {
-  background: #F5F5F5 !important;
-  color: #000000 !important;
-  border-color: #E0E0E0 !important;
-}
-html.dark .qa-input::placeholder { color: #B0B0B0 !important; }
-html.dark .qa-input:focus {
-  border-color: #1A1B1F !important;
-  box-shadow: 0 0 0 3px rgba(26, 27, 31, 0.1) !important;
-}
-html.dark .qa-btn {
-  color: #FFFFFF !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
-}
-html.dark .qa-btn:hover { box-shadow: 0 4px 10px rgba(26, 27, 31, 0.2) !important; }
-html.dark .qa-btn:active { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important; }
-html.dark .qa-loading { color: #757575 !important; }
-html.dark .qa-answer {
-  background: #F5F5F5 !important;
-  color: #000000 !important;
-  border-color: #E0E0E0 !important;
-  box-shadow: inset 0 1px 3px rgba(26, 27, 31, 0.1) !important;
-}
+.qa-title { color: #1a202c; }
 
-/* 响应式适配（和你的全局断点一致） */
+/* 响应式适配 */
 @media screen and (max-width: 636px) {
   .blog-ai-qa {
     margin: 1.5rem auto;
@@ -202,8 +177,23 @@ html.dark .qa-answer {
   .qa-btn { padding: 0.5rem 1rem; font-size: 1rem; }
   .qa-answer { padding: 1.2rem 1rem; font-size: 0.95rem; }
 }
+
 @media screen and (max-width: 480px) {
   .blog-ai-qa { margin: 1rem auto; padding: 1rem; }
+}
+
+.8r-link {
+  display: block;
+  text-align: center;
+  color: #667eea;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.8r-link:hover {
+  color: #764ba2;
 }
 </style>
 

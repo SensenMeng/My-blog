@@ -1,0 +1,247 @@
+---
+// CatFishing.astro - 像素风格小猫钓鱼喂鱼游戏
+import '../styles/cat-fishing.css';
+---
+
+<div class="cat-fishing-widget">
+  <div class="cat-header">
+    <h3 class="cat-title">🐱 像素小猫</h3>
+    <button class="cat-close" id="cat-close" aria-label="关闭">×</button>
+  </div>
+
+  <div class="cat-body">
+    <!-- 像素小猫 -->
+    <div class="pixel-cat" id="pixel-cat">
+      <div class="cat-ear cat-ear-left"></div>
+      <div class="cat-ear cat-ear-right"></div>
+      <div class="cat-face">
+        <div class="cat-eye cat-eye-left"></div>
+        <div class="cat-eye cat-eye-right"></div>
+        <div class="cat-nose"></div>
+        <div class="cat-mouth"></div>
+      </div>
+    </div>
+
+    <!-- 状态信息 -->
+    <div class="cat-stats">
+      <div class="stat-item">
+        <span class="stat-label">🐟 鱼:</span>
+        <span class="stat-value" id="fish-count">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">❤️ 好感度:</span>
+        <span class="stat-value" id="affection-level">0</span>
+      </div>
+    </div>
+
+    <!-- 好感度进度条 -->
+    <div class="affection-bar-container">
+      <div class="affection-bar" id="affection-bar"></div>
+      <div class="affection-text" id="affection-text">陌生</div>
+    </div>
+
+    <!-- 行动按钮 -->
+    <div class="cat-actions">
+      <button class="action-btn feed-btn" id="feed-btn" disabled>喂鱼</button>
+      <button class="action-btn reset-btn" id="reset-btn">重置</button>
+    </div>
+
+    <!-- 提示信息 -->
+    <div class="cat-hint" id="cat-hint">
+      自动钓鱼中... 每30秒获得一条鱼
+    </div>
+  </div>
+</div>
+
+<!-- 控制按钮（小猫被隐藏时显示） -->
+<button class="cat-toggle-btn" id="cat-toggle-btn" aria-label="显示小猫">
+  🐱
+</button>
+
+<script>
+  // 初始化游戏状态
+  function initCatGame() {
+    // DOM 元素
+    const fishCountEl = document.getElementById('fish-count');
+    const affectionLevelEl = document.getElementById('affection-level');
+    const affectionBarEl = document.getElementById('affection-bar');
+    const affectionTextEl = document.getElementById('affection-text');
+    const feedBtn = document.getElementById('feed-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const catHint = document.getElementById('cat-hint');
+    const pixelCat = document.getElementById('pixel-cat');
+    const catClose = document.getElementById('cat-close');
+    const catToggleBtn = document.getElementById('cat-toggle-btn');
+
+    // 检查元素是否存在
+    if (!fishCountEl || !affectionLevelEl || !affectionBarEl || !affectionTextEl || !feedBtn || !resetBtn || !catHint) {
+      console.error('Cat game elements not found');
+      return;
+    }
+
+    // 从 localStorage 加载状态
+    let fish = parseInt(localStorage.getItem('cat_fish') || '0');
+    let affection = parseInt(localStorage.getItem('cat_affection') || '0');
+
+    // 更新显示
+    function updateDisplay() {
+      fishCountEl.textContent = fish;
+      affectionLevelEl.textContent = affection;
+
+      // 更新进度条 (0-100)
+      const affectionPercent = Math.min(100, Math.floor(affection / 10));
+      affectionBarEl.style.width = affectionPercent + '%';
+
+      // 更新好感度文本
+      let text = '陌生';
+      if (affection >= 100) text = '依赖';
+      else if (affection >= 70) text = '亲密';
+      else if (affection >= 40) text = '友好';
+      else if (affection >= 20) text = '认识';
+      affectionTextEl.textContent = text;
+
+      // 更新喂鱼按钮状态
+      feedBtn.disabled = fish <= 0;
+
+      // 保存到 localStorage
+      localStorage.setItem('cat_fish', fish.toString());
+      localStorage.setItem('cat_affection', affection.toString());
+
+      // 更新小猫表情
+      updateCatExpression();
+    }
+
+    // 更新小猫表情
+    function updateCatExpression() {
+      pixelCat.className = 'pixel-cat';
+      if (affection >= 70) {
+        pixelCat.classList.add('cat-happy');
+      } else if (affection >= 40) {
+        pixelCat.classList.add('cat-content');
+      } else if (fish > 0) {
+        pixelCat.classList.add('cat-hungry');
+      } else {
+        pixelCat.classList.add('cat-neutral');
+      }
+    }
+
+    // 喂鱼
+    function feedCat() {
+      if (fish <= 0) return;
+
+      fish--;
+      affection += 2; // 每喂一次增加2点好感度
+
+      // 显示提示
+      catHint.textContent = '小猫吃了鱼，好感度 +2!';
+      catHint.classList.add('show');
+      setTimeout(() => {
+        catHint.classList.remove('show');
+        catHint.textContent = '自动钓鱼中... 每30秒获得一条鱼';
+      }, 2000);
+
+      updateDisplay();
+    }
+
+    // 自动钓鱼
+    function autoFish() {
+      fish++;
+      catHint.textContent = '钓到一条鱼!';
+      catHint.classList.add('show');
+      setTimeout(() => {
+        catHint.classList.remove('show');
+        catHint.textContent = '自动钓鱼中... 每30秒获得一条鱼';
+      }, 1500);
+      updateDisplay();
+    }
+
+    // 重置游戏
+    function resetGame() {
+      if (confirm('确定要重置小猫游戏吗？所有进度将会丢失。')) {
+        fish = 0;
+        affection = 0;
+        localStorage.removeItem('cat_fish');
+        localStorage.removeItem('cat_affection');
+        updateDisplay();
+        catHint.textContent = '游戏已重置，重新开始吧!';
+        catHint.classList.add('show');
+        setTimeout(() => {
+          catHint.classList.remove('show');
+          catHint.textContent = '自动钓鱼中... 每30秒获得一条鱼';
+        }, 2000);
+      }
+    }
+
+    // 关闭小部件
+    if (catClose) {
+      catClose.addEventListener('click', () => {
+        const widget = document.querySelector('.cat-fishing-widget');
+        if (widget) {
+          widget.style.display = 'none';
+          localStorage.setItem('cat_widget_hidden', 'true');
+          // 显示控制按钮
+          if (catToggleBtn) {
+            catToggleBtn.style.display = 'flex';
+          }
+        }
+      });
+    }
+
+    // 检查是否之前被隐藏
+    const hidden = localStorage.getItem('cat_widget_hidden') === 'true';
+    if (hidden) {
+      const widget = document.querySelector('.cat-fishing-widget');
+      if (widget) {
+        widget.style.display = 'none';
+      }
+      // 显示控制按钮
+      if (catToggleBtn) {
+        catToggleBtn.style.display = 'flex';
+      }
+    } else {
+      // 确保控制按钮隐藏
+      if (catToggleBtn) {
+        catToggleBtn.style.display = 'none';
+      }
+    }
+
+    // 事件监听
+    // 控制按钮点击事件
+    if (catToggleBtn) {
+      catToggleBtn.addEventListener('click', () => {
+        const widget = document.querySelector('.cat-fishing-widget');
+        if (widget) {
+          widget.style.display = 'block';
+          localStorage.setItem('cat_widget_hidden', 'false');
+          catToggleBtn.style.display = 'none';
+        }
+      });
+    }
+
+    feedBtn.addEventListener('click', feedCat);
+    resetBtn.addEventListener('click', resetGame);
+
+    // 初始化显示
+    updateDisplay();
+
+    // 设置自动钓鱼定时器 (每30秒)
+    setInterval(autoFish, 30000);
+
+    // 初始钓鱼提醒
+    setTimeout(() => {
+      catHint.textContent = '每30秒自动获得一条鱼，记得喂小猫哦!';
+      catHint.classList.add('show');
+      setTimeout(() => {
+        catHint.classList.remove('show');
+        catHint.textContent = '自动钓鱼中... 每30秒获得一条鱼';
+      }, 3000);
+    }, 5000);
+  }
+
+  // 当 DOM 加载完成后初始化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCatGame, { once: true });
+  } else {
+    initCatGame();
+  }
+</script>

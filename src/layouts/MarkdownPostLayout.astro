@@ -26,7 +26,6 @@ const { frontmatter } = Astro.props;
 
 <style>
   .back-to-top-container {
-    /* 确保容器不影响页面布局 */
     position: relative;
     width: 100%;
   }
@@ -41,9 +40,21 @@ const { frontmatter } = Astro.props;
     border-radius: .5em;
     padding: .5em 1em;
     font-size: 1.15em;
-    background-color: #1A1B1F;
+    background-color: rgba(102, 126, 234, 0.2);
+    border: 1px solid rgba(102, 126, 234, 0.5);
+    transition: all 0.3s ease;
   }
-  .tag a{color:#C1C3C7;}
+  .tag:hover {
+    background-color: rgba(102, 126, 234, 0.3);
+    transform: translateY(-2px);
+  }
+  .tag a {
+    color: #667eea;
+    text-decoration: none;
+  }
+  .tag a:hover {
+    color: #764ba2;
+  }
 </style>
 
 <!-- 纯JS版MathJax配置（无TS语法，避免声明错误） -->

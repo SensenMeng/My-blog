@@ -3,24 +3,104 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
-const { pageTitle } = Astro.props;;
+const { pageTitle } = Astro.props;
 ---
 
-<html lang="zn-cn">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
+
+    <!-- Google Fonts: Inter & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- 平滑滚动和自定义样式 -->
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* 自定义选择样式 */
+      ::selection {
+        background: rgba(102, 126, 234, 0.3);
+        color: #000;
+      }
+
+      /* 自定义滚动条 */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(102, 126, 234, 0.5);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(102, 126, 234, 0.7);
+      }
+    </style>
   </head>
   <body>
     <Header />
-    <h1>{pageTitle}</h1>
-    <slot />
+    <main class="modern-main">
+      <slot />
+    </main>
     <Footer />
-	  <script>
-		import "../scripts/menu";
+
+    <script>
+      import "../scripts/menu";
     </script>
   </body>
 </html>
+
+<style>
+  html {
+    background-color: #f7fafc;
+    font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    width: 100%;
+    padding: 0;
+    line-height: 1.6;
+    color: #2d3748;
+    overflow-x: hidden;
+  }
+
+  .modern-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 800;
+  }
+
+  @media (max-width: 768px) {
+    .modern-main {
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

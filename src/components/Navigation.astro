@@ -1,9 +1,146 @@
----
----
-<div id="main-menu" class="nav-links">
-    <a href="/">主页</a>
-    <a href="/about/">关于</a>
-    <a href="/blog/">博客</a>
-    <a href="/tags/">标签</a>
-    <a href="/ai-ask/">AI问答</a>
+<div id="main-menu" class="modern-nav-links">
+    <a href="/" class="nav-link">
+        <span class="nav-text">主页</span>
+        <span class="nav-underline"></span>
+    </a>
+    <a href="/about/" class="nav-link">
+        <span class="nav-text">关于</span>
+        <span class="nav-underline"></span>
+    </a>
+    <a href="/blog/" class="nav-link">
+        <span class="nav-text">博客</span>
+        <span class="nav-underline"></span>
+    </a>
+    <a href="/tags/" class="nav-link">
+        <span class="nav-text">标签</span>
+        <span class="nav-underline"></span>
+    </a>
+    <a href="/ai-ask/" class="nav-link">
+        <span class="nav-text">AI问答</span>
+        <span class="nav-underline"></span>
+    </a>
 </div>
+
+<style>
+.modern-nav-links {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.nav-link {
+  position: relative;
+  padding: 0.6rem 1rem;
+  color: rgba(28, 35, 51, 0.85);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.25s ease;
+  overflow: hidden;
+}
+
+.nav-text {
+  position: relative;
+  z-index: 1;
+}
+
+.nav-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #667eea;
+  transition: width 0.25s ease;
+  border-radius: 1px;
+}
+
+.nav-link:hover .nav-underline,
+.nav-link.active .nav-underline {
+  width: 100%;
+}
+
+.nav-link:hover {
+  color: #667eea;
+}
+
+.nav-link.active {
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* 移动端 */
+@media (max-width: 768px) {
+  .modern-nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.08);
+    flex-direction: column;
+    padding: 0.5rem 0;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 999;
+  }
+
+  .modern-nav-links.open {
+    max-height: 420px;
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .nav-link {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    color: rgba(28, 35, 51, 0.85);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.25s ease;
+  }
+
+  .modern-nav-links.open .nav-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .modern-nav-links.open .nav-link:nth-child(1) { transition-delay: 0.05s; }
+  .modern-nav-links.open .nav-link:nth-child(2) { transition-delay: 0.1s; }
+  .modern-nav-links.open .nav-link:nth-child(3) { transition-delay: 0.15s; }
+  .modern-nav-links.open .nav-link:nth-child(4) { transition-delay: 0.2s; }
+  .modern-nav-links.open .nav-link:nth-child(5) { transition-delay: 0.25s; }
+
+  .nav-link:hover {
+    background: rgba(102, 126, 234, 0.06);
+    color: #667eea;
+  }
+
+  .nav-link.active {
+    background: rgba(102, 126, 234, 0.08);
+    color: #667eea;
+    font-weight: 600;
+  }
+
+  .nav-underline {
+    display: none;
+  }
+}
+</style>
+
+<script>
+const currentPath = window.location.pathname;
+document.querySelectorAll('.nav-link').forEach(link => {
+  const href = link.getAttribute('href') ?? '';
+  if (href === currentPath || (href !== '/' && currentPath.startsWith(href))) {
+    link.classList.add('active');
+  }
+});
+</script>
